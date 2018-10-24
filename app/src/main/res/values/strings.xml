@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TSM_MobOp-app</string>
+
+    <string name="onboard_message">Start shopping by scanning an item</string>
+
+    <string name="cart_total">Total:</string>
 </resources>

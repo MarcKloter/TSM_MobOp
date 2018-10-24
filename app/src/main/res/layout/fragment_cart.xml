@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="3"
+    android:rowCount="1">
+
+    <TextView
+        android:id="@+id/item_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+    <TextView
+        android:id="@+id/item_label"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="4"
+        android:layout_gravity="fill"
+        android:layout_margin="@dimen/text_margin"
+        android:textAlignment="center"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+    <!-- break text within TextView from https://stackoverflow.com/a/34099239/4382892 -->
+    <TextView
+        android:id="@+id/item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/text_margin"
+        android:textAlignment="textEnd"
+        android:textAppearance="?attr/textAppearanceListItem" />
+</GridLayout>
