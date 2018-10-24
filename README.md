@@ -1,3 +1,2 @@
-# TSM_MobOp
-This repository contains an android app which is developed by three students in a group project. The app is called Self-Cashier-App. Its goal is to make your shopping easier and without the need of a cashier.  
-But keep in mind: __THIS APP IS JUST FOR A SCHOOL PROJECT AND NOT WORKING IN A REAL WORLD ENVIRONMENT.__
+# TSM_MobOp: Self-Cashier-App
+This repository contains an android app that was developed by three students for a schoolar group project. The goal of the app is to simplify your shopping by supplying additional product information and dispose the need of a cashier.
