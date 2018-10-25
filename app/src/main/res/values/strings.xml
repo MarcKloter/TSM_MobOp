@@ -4,4 +4,6 @@
     <string name="onboard_message">Start shopping by scanning an item</string>
 
     <string name="cart_total">Total:</string>
+
+    <string name="cart_empty_state">Nothing to see, move on!</string>
 </resources>

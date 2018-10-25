@@ -2,45 +2,30 @@ package mse.ch.tsm_mobop_app.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
-import android.widget.TextView;
 
 import mse.ch.tsm_mobop_app.R;
-import mse.ch.tsm_mobop_app.cart.CartFragment;
 import mse.ch.tsm_mobop_app.cart.CartItem;
-import mse.ch.tsm_mobop_app.cart.MockContent;
+import mse.ch.tsm_mobop_app.cart.CartListener;
 
-public class PurchaseActivity extends AppCompatActivity implements CartFragment.CartListener {
-
-    private TextView cartCounter;
-    private TextView cartTotal;
+public class PurchaseActivity extends AppCompatActivity implements CartListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purchase);
-        cartCounter = findViewById(R.id.cart_count);
-        cartTotal = findViewById(R.id.cart_total);
-        setQuantity(0);
-        setTotal(0);
+    }
+
+    @Override
+    public void onProceedToCheckout() {
+        // TODO: open checkout fragment
     }
 
     @Override
     public void onItemClick(CartItem item) {
-
+        // TODO: open item details fragment
     }
-
     @Override
-    public void onCartChanged(int quantity, double total) {
-        setQuantity(quantity);
-        setTotal(total);
-    }
-
-    private void setQuantity(int quantity) {
-        cartCounter.setText(String.format("%d %s in your cart", quantity, (quantity != 1) ? "items" : "item"));
-    }
-
-    private void setTotal(double price) {
-        cartTotal.setText(String.format("%.2f CHF", price));
+    public void onScanButtonPress() {
+        // TODO: fire QR scan intent
     }
 }

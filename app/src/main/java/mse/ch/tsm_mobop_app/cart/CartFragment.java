@@ -10,22 +10,27 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.math.BigDecimal;
 
 import mse.ch.tsm_mobop_app.R;
-import mse.ch.tsm_mobop_app.activities.PurchaseActivity;
 
 /**
  * Fragment representing the shopping cart
  */
-public class CartFragment extends Fragment {
-    private CartListener mListener;
+public class CartFragment extends Fragment implements CartRecyclerViewListener {
+    private CartListener cListener;
+
+    private TextView cartCounter;
+    private TextView cartTotal;
 
     /**
      * Mandatory empty constructor for the fragment manager
@@ -41,9 +46,14 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cart_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
-        setupRecyclerView(view);
+        cartCounter = view.findViewById(R.id.cart_count);
+        cartTotal = view.findViewById(R.id.cart_total);
+        setCartCount(0);
+        setTotal(new BigDecimal(0));
+
+        setupRecyclerView(view.findViewById(R.id.cart_recycler_view));
         return view;
     }
 
@@ -54,7 +64,7 @@ public class CartFragment extends Fragment {
             RecyclerView recyclerView = (RecyclerView) view;
 
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new CartRecyclerViewAdapter(MockContent.ITEMS, mListener));
+            recyclerView.setAdapter(new CartRecyclerViewAdapter(MockContent.ITEMS, this, cListener));
 
             // add divider
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -145,10 +155,24 @@ public class CartFragment extends Fragment {
     }
 
     @Override
+    public void onCartContentChanged(int itemCount, BigDecimal total) {
+        setCartCount(itemCount);
+        setTotal(total);
+    }
+
+    private void setCartCount(int cartCount) {
+        cartCounter.setText(String.format("%d %s in your cart", cartCount, (cartCount != 1) ? "items" : "item"));
+    }
+
+    private void setTotal(BigDecimal total) {
+        cartTotal.setText(String.format(" %.2f CHF", total));
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof CartListener) {
-            mListener = (CartListener) context;
+            cListener = (CartListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -158,11 +182,6 @@ public class CartFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
-    }
-
-    public interface CartListener {
-        void onItemClick(CartItem item);
-        void onCartChanged(int quantity, double total);
+        cListener = null;
     }
 }

@@ -1,84 +1,91 @@
 package mse.ch.tsm_mobop_app.cart;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import mse.ch.tsm_mobop_app.R;
-import mse.ch.tsm_mobop_app.cart.CartFragment.CartListener;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.ViewHolder> {
 
-    private final List<CartItem> mValues;
-    private final CartListener mListener;
+    private final List<CartItem> cartContent;
+    private final CartRecyclerViewListener crvListener;
+    private final CartListener cListener;
 
-    public CartRecyclerViewAdapter(List<CartItem> items, CartListener listener) {
-        mValues = items;
-        mListener = listener;
+    public CartRecyclerViewAdapter(List<CartItem> items, CartRecyclerViewListener crvListener, CartListener cListener) {
+        Log.e("myapp", "SIZE: ---------" + items.size());
+        this.cartContent = items;
+        this.crvListener = crvListener;
+        this.cListener = cListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_cart, parent, false);
+                .inflate(R.layout.viewholder_cart_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mQuantityView.setText(formatQuantity(mValues.get(position)));
-        holder.mLabelView.setText(mValues.get(position).label);
-        holder.mPriceView.setText(String.format("%.2f", mValues.get(position).price));
+        holder.mItem = cartContent.get(position);
+        holder.mQuantityView.setText(formatQuantity(cartContent.get(position)));
+        holder.mLabelView.setText(cartContent.get(position).label);
+        holder.mPriceView.setText(String.format("%.2f", cartContent.get(position).price));
 
-        mListener.onCartChanged(getQuantity(), getTotal());
+        crvListener.onCartContentChanged(getCartCount(), getTotal());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
-                    mListener.onItemClick(holder.mItem);
+                if (null != cListener) {
+                    cListener.onItemClick(holder.mItem);
                 }
             }
         });
     }
 
     public void remove(int position) {
-        CartItem item = mValues.get(position);
-        if (mValues.contains(item)) {
-            mValues.remove(position);
+        CartItem item = cartContent.get(position);
+        if (cartContent.contains(item)) {
+            cartContent.remove(position);
             notifyItemRemoved(position);
-            mListener.onCartChanged(getQuantity(), getTotal());
+            crvListener.onCartContentChanged(getCartCount(), getTotal());
         }
     }
 
     private String formatQuantity(CartItem item) {
-        return String.format("%.2f", item.quantity) + item.quantity_label;
+        double quantity = item.quantity.doubleValue();
+        DecimalFormat format = new DecimalFormat("0.###");
+        return format.format(quantity) + item.quantity_label;
     }
 
-    public int getQuantity() {
+    public int getCartCount() {
         int count = 0;
-        for(CartItem item : mValues) {
-            count += item.getQuantity();
+        for(CartItem item : cartContent) {
+            count += item.getItemCount();
         }
         return count;
     }
 
-    public double getTotal() {
-        double total = 0;
-        for(CartItem item : mValues) {
-            total += item.getPrice();
+    public BigDecimal getTotal() {
+        BigDecimal total = new BigDecimal(0);
+        for(CartItem item : cartContent) {
+            total = total.add(item.getPrice());
         }
         return total;
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return cartContent.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
