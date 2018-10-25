@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
@@ -47,6 +48,15 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
+
+        FloatingActionButton scanFab = (FloatingActionButton) view.findViewById(R.id.cart_scan);
+        scanFab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (cListener != null) {
+                    cListener.onScanButtonPress();
+                }
+            }
+        });
 
         cartCounter = view.findViewById(R.id.cart_count);
         cartTotal = view.findViewById(R.id.cart_total);

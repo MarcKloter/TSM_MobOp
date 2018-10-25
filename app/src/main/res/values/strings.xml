@@ -6,4 +6,10 @@
     <string name="cart_total">Total:</string>
 
     <string name="cart_empty_state">Nothing to see, move on!</string>
+
+    <string name="qr_error_message">There was an error retrieving the item information.</string>
+    <string name="qr_error_button">Retry</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

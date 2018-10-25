@@ -61,6 +61,11 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
         }
     }
 
+    //TODO: Diego
+    public void add(int position) {
+        throw new RuntimeException("Not implemented yet.");
+    }
+
     private String formatQuantity(CartItem item) {
         double quantity = item.quantity.doubleValue();
         DecimalFormat format = new DecimalFormat("0.###");
