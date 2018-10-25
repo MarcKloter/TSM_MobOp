@@ -1,5 +1,6 @@
 package mse.ch.tsm_mobop_app.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -26,6 +27,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener 
     }
     @Override
     public void onScanButtonPress() {
-        // TODO: fire QR scan intent
+        Intent intent = new Intent(PurchaseActivity.this, ScanActivity.class);
+        startActivity(intent);
     }
 }

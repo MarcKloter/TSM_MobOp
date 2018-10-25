@@ -54,6 +54,15 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
+        FloatingActionButton scanFab = (FloatingActionButton) view.findViewById(R.id.cart_scan);
+        scanFab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (cListener != null) {
+                    cListener.onScanButtonPress();
+                }
+            }
+        });
+
         cartCounter = view.findViewById(R.id.cart_count);
         cartTotal = view.findViewById(R.id.cart_total);
 
