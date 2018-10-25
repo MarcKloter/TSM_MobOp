@@ -1,4 +1,4 @@
-package mse.ch.tsm_mobop_app.Data;
+package mse.ch.tsm_mobop_app.data;
 
 /**
  * Data model for a single article in the database with its UID.

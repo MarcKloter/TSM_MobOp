@@ -1,4 +1,4 @@
-package mse.ch.tsm_mobop_app.Data;
+package mse.ch.tsm_mobop_app.data;
 
 /**
     Exception for the read / write action of the articles in the database.

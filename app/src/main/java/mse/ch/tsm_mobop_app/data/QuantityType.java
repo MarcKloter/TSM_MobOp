@@ -1,4 +1,4 @@
-package mse.ch.tsm_mobop_app.Data;
+package mse.ch.tsm_mobop_app.data;
 
 /**
  * Different types of quantities which an article can have.

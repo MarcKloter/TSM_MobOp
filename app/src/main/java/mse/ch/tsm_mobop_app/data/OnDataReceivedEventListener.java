@@ -1,4 +1,4 @@
-package mse.ch.tsm_mobop_app.Data;
+package mse.ch.tsm_mobop_app.data;
 
 /**
  * This interface belongs to the DataController classes which have async data receiving methods

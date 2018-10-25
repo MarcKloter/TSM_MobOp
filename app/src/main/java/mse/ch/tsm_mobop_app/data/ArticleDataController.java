@@ -1,4 +1,4 @@
-package mse.ch.tsm_mobop_app.Data;
+package mse.ch.tsm_mobop_app.data;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +39,7 @@ public class ArticleDataController {
                     ArticleDataModelReduced reducedModel = dataSnapshot.child("" + uid).getValue(ArticleDataModelReduced.class);
                     ArticleDataModel article = new ArticleDataModel();
                     if(reducedModel != null){
-                        article = ArticleDataModelReduced.ToArticleDataModel(reducedModel, uid);
+                        article = ArticleDataModelReduced.toArticleDataModel(reducedModel, uid);
                     }
                     callbackListener.onDataReceived(article);
                 }
@@ -57,6 +57,6 @@ public class ArticleDataController {
 
     public void saveArticleById(ArticleDataModel article){
         articleReference.child("" + article.getUid()).setValue(
-                ArticleDataModelReduced.FromArticleDataModel(article));
+                ArticleDataModelReduced.fromArticleDataModel(article));
     }
 }

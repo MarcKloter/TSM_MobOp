@@ -1,4 +1,4 @@
-package mse.ch.tsm_mobop_app.Data;
+package mse.ch.tsm_mobop_app.data;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,7 +28,7 @@ public class DatabaseDevUtility {
 
         //Fill Database with articles.
         for(ArticleDataModel current : this.createDumpArticleData()){
-            articleReference.child(ARTICLE_REFERENCE).child("" + current.getUid()).setValue(ArticleDataModelReduced.FromArticleDataModel(current));
+            articleReference.child(ARTICLE_REFERENCE).child("" + current.getUid()).setValue(ArticleDataModelReduced.fromArticleDataModel(current));
         }
     }
 

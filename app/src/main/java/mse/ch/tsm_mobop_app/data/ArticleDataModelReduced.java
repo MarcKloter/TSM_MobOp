@@ -1,4 +1,4 @@
-package mse.ch.tsm_mobop_app.Data;
+package mse.ch.tsm_mobop_app.data;
 
 /**
  *  Data model for a single article in the database WITHOUT UID.
@@ -11,12 +11,12 @@ class ArticleDataModelReduced {
     private QuantityType quantityType;
     private double pricePerQty;
 
-    public static ArticleDataModelReduced FromArticleDataModel(ArticleDataModel articleDataModel){
+    public static ArticleDataModelReduced fromArticleDataModel(ArticleDataModel articleDataModel){
         return new ArticleDataModelReduced(articleDataModel.getName(), articleDataModel.getDescription(),
                 articleDataModel.getQuantityType(), articleDataModel.getPricePerQty());
     }
 
-    public static ArticleDataModel ToArticleDataModel(ArticleDataModelReduced reducedModel, int uid){
+    public static ArticleDataModel toArticleDataModel(ArticleDataModelReduced reducedModel, int uid){
         return new ArticleDataModel(reducedModel.getName(), reducedModel.getDescription(),
                 reducedModel.getQuantityType(), reducedModel.getPricePerQty(), uid);
     }
