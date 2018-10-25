@@ -8,6 +8,35 @@
     tools:context=".activities.PurchaseActivity">
 
     <LinearLayout
+        android:id="@+id/cart_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8sp"
+            android:drawableTop="@drawable/ic_qr_code"
+            android:drawablePadding="16dp"
+            android:text="@string/cart_empty_state_title"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/cart_empty_state_subtitle"
+            android:textAlignment="center"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/footer"
@@ -31,16 +60,11 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:clipToPadding="false"
+            android:paddingBottom="100dp"
             tools:context=".cart.CartFragment"
             tools:listitem="@layout/viewholder_cart_item" />
 
-        <TextView
-            android:id="@+id/empty_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:visibility="gone"
-            android:text="@string/cart_empty_state" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/footer"

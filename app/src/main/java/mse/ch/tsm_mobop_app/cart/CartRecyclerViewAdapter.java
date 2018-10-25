@@ -20,7 +20,6 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
     private final CartListener cListener;
 
     public CartRecyclerViewAdapter(List<CartItem> items, CartRecyclerViewListener crvListener, CartListener cListener) {
-        Log.e("myapp", "SIZE: ---------" + items.size());
         this.cartContent = items;
         this.crvListener = crvListener;
         this.cListener = cListener;
@@ -36,9 +35,9 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = cartContent.get(position);
-        holder.mQuantityView.setText(formatQuantity(cartContent.get(position)));
-        holder.mLabelView.setText(cartContent.get(position).label);
-        holder.mPriceView.setText(String.format("%.2f", cartContent.get(position).price));
+        holder.mQuantityView.setText(cartContent.get(position).getFormattedQuantity());
+        holder.mLabelView.setText(cartContent.get(position).getLabel());
+        holder.mPriceView.setText(cartContent.get(position).getFormattedPrice());
 
         crvListener.onCartContentChanged(getCartCount(), getTotal());
 
@@ -59,12 +58,6 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
             notifyItemRemoved(position);
             crvListener.onCartContentChanged(getCartCount(), getTotal());
         }
-    }
-
-    private String formatQuantity(CartItem item) {
-        double quantity = item.quantity.doubleValue();
-        DecimalFormat format = new DecimalFormat("0.###");
-        return format.format(quantity) + item.quantity_label;
     }
 
     public int getCartCount() {

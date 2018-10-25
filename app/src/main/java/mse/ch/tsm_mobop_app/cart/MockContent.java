@@ -30,6 +30,6 @@ public class MockContent {
 
     private static void addItem(CartItem item) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+        ITEM_MAP.put(item.getId(), item);
     }
 }

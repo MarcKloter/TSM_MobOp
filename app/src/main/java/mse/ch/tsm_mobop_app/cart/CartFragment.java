@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
@@ -31,6 +33,10 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
 
     private TextView cartCounter;
     private TextView cartTotal;
+
+    private FloatingActionButton checkoutFAB;
+    private RecyclerView cartRecyclerView;
+    private LinearLayout cartEmptyView;
 
     /**
      * Mandatory empty constructor for the fragment manager
@@ -50,10 +56,13 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
 
         cartCounter = view.findViewById(R.id.cart_count);
         cartTotal = view.findViewById(R.id.cart_total);
-        setCartCount(0);
-        setTotal(new BigDecimal(0));
 
-        setupRecyclerView(view.findViewById(R.id.cart_recycler_view));
+        checkoutFAB = view.findViewById(R.id.cart_checkout);
+        cartRecyclerView = view.findViewById(R.id.cart_recycler_view);
+        cartEmptyView = view.findViewById(R.id.cart_empty_view);
+
+        setupRecyclerView(cartRecyclerView);
+
         return view;
     }
 
@@ -158,6 +167,17 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
     public void onCartContentChanged(int itemCount, BigDecimal total) {
         setCartCount(itemCount);
         setTotal(total);
+
+        // toggle empty state
+        if(itemCount == 0) {
+            checkoutFAB.hide();
+            cartRecyclerView.setVisibility(View.GONE);
+            cartEmptyView.setVisibility(LinearLayout.VISIBLE);
+        } else {
+            checkoutFAB.show();
+            cartRecyclerView.setVisibility(View.VISIBLE);
+            cartEmptyView.setVisibility(LinearLayout.GONE);
+        }
     }
 
     private void setCartCount(int cartCount) {

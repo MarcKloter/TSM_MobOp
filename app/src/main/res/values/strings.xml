@@ -5,5 +5,6 @@
 
     <string name="cart_total">Total:</string>
 
-    <string name="cart_empty_state">Nothing to see, move on!</string>
+    <string name="cart_empty_state_title">Your cart is empty</string>
+    <string name="cart_empty_state_subtitle">Scan an item to add it to your cart.</string>
 </resources>

@@ -3,20 +3,21 @@ package mse.ch.tsm_mobop_app.cart;
 import android.util.Log;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 public class CartItem {
-    public final String id;
-    public final String label;
-    public final BigDecimal price;
-    public final BigDecimal quantity;
-    public final String quantity_label;
+    private final String id;
+    private final String label;
+    private final BigDecimal price;
+    private final BigDecimal quantity;
+    private final String quantityLabel;
 
     public CartItem(String id, String label, BigDecimal price, BigDecimal quantity) {
         this.id = id;
         this.label = label;
         this.price = price;
         this.quantity = quantity;
-        this.quantity_label = "";
+        this.quantityLabel = "";
     }
 
     public CartItem(String id, String label, BigDecimal price, BigDecimal quantity, String quantity_label) {
@@ -24,15 +25,34 @@ public class CartItem {
         this.label = label;
         this.price = price;
         this.quantity = quantity;
-        this.quantity_label = quantity_label;
+        this.quantityLabel = quantity_label;
     }
 
     public int getItemCount() {
-        return (quantity_label.isEmpty()) ? quantity.intValueExact() : 1;
+        return quantityLabel.isEmpty() ? quantity.intValueExact() : 1;
     }
 
     public BigDecimal getPrice() {
-        return price;
+        return quantityLabel.isEmpty() ? price.multiply(quantity) : price;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String getFormattedPrice() {
+        DecimalFormat format = new DecimalFormat("0.00");
+        return format.format(getPrice());
+    }
+
+    public String getFormattedQuantity() {
+        double d = quantity.doubleValue();
+        DecimalFormat format = new DecimalFormat("0.###");
+        return format.format(d) + quantityLabel;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override
