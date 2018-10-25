@@ -51,6 +51,7 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
                 String result = intent.getStringExtra("SCAN_RESULT");
                 this.loadDataFromId(result);
             } else if (resultCode == RESULT_CANCELED) {
+                setResult(RESULT_CANCELED);
                 finish();
             }
         }
@@ -80,7 +81,10 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
     public void onDataReceived(Object object) {
         try{
             ArticleDataModel article = (ArticleDataModel)object;
-            //TODO Diego: Add Cart Item
+            Intent result = new Intent();
+            result.putExtra("ARTICLE", article);
+            setResult(RESULT_OK, result);
+            finish();
         }
         catch (Exception ex){
             this.setQrErrorFragment();
