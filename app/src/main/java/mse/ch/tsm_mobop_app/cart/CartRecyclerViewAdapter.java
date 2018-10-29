@@ -1,7 +1,6 @@
 package mse.ch.tsm_mobop_app.cart;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 import mse.ch.tsm_mobop_app.R;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.ViewHolder> {
@@ -51,6 +49,20 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
         });
     }
 
+    public int getItemPositionById(String uid) throws CartItemNotFoundException{
+        CartItem searchItem = new CartItem(uid, "searchItem", new BigDecimal(1), new BigDecimal(1));
+        if(!cartContent.contains(searchItem)){
+            throw new CartItemNotFoundException("Item not in cart!");
+        }
+        return cartContent.indexOf(searchItem);
+    }
+
+    public void increaseQuantityByPosition(int pos) {
+        this.cartContent.get(pos).increaseItemCount();
+        notifyDataSetChanged();
+        crvListener.onCartContentChanged(getCartCount(), getTotal());
+    }
+
     public void remove(int position) {
         CartItem item = cartContent.get(position);
         if (cartContent.contains(item)) {
@@ -58,6 +70,12 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
             notifyItemRemoved(position);
             crvListener.onCartContentChanged(getCartCount(), getTotal());
         }
+    }
+
+    public void add(CartItem item){
+        cartContent.add(item);
+        notifyDataSetChanged();
+        crvListener.onCartContentChanged(getCartCount(), getTotal());
     }
 
     public int getCartCount() {

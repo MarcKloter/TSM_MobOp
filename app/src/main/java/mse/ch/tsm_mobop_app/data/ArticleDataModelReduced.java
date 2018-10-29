@@ -1,11 +1,13 @@
 package mse.ch.tsm_mobop_app.data;
 
+import java.io.Serializable;
+
 /**
  *  Data model for a single article in the database WITHOUT UID.
  *  DO NOT USE THIS CLASS FOR HANDLING DATA. This class is only intended for the read and
  *  write operations to the database.
  */
-class ArticleDataModelReduced {
+class ArticleDataModelReduced implements Serializable {
     private String name;
     private String description;
     private QuantityType quantityType;

@@ -4,12 +4,14 @@ import android.util.Log;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public class CartItem {
+    //TODO: Refactor this model class
     private final String id;
     private final String label;
     private final BigDecimal price;
-    private final BigDecimal quantity;
+    private BigDecimal quantity;
     private final String quantityLabel;
 
     public CartItem(String id, String label, BigDecimal price, BigDecimal quantity) {
@@ -30,6 +32,10 @@ public class CartItem {
 
     public int getItemCount() {
         return quantityLabel.isEmpty() ? quantity.intValueExact() : 1;
+    }
+
+    public void increaseItemCount(){
+        this.quantity = this.quantity.add(new BigDecimal(1));
     }
 
     public BigDecimal getPrice() {
@@ -58,5 +64,19 @@ public class CartItem {
     @Override
     public String toString() {
         return label;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CartItem cartItem = (CartItem) o;
+        return Objects.equals(getId(), cartItem.getId());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId());
     }
 }

@@ -18,6 +18,7 @@ import mse.ch.tsm_mobop_app.scan.ScanLoadingFragment;
  */
 public class ScanActivity extends AppCompatActivity implements OnDataReceivedEventListener, ScanErrorFragment.ScanErrorInteractionListener {
 
+    private static final String INTENT_RETURN_EXTRA = "ARTICLE";
     private static final int REQUEST_CODE = 5234;
     private static final ScanErrorFragment SCAN_ERROR_FRAGMENT = new ScanErrorFragment();
     private static final ScanLoadingFragment SCAN_LOADING_FRAGMENT = new ScanLoadingFragment();
@@ -82,7 +83,7 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
         try{
             ArticleDataModel article = (ArticleDataModel)object;
             Intent result = new Intent();
-            result.putExtra("ARTICLE", article);
+            result.putExtra(INTENT_RETURN_EXTRA, article);
             setResult(RESULT_OK, result);
             finish();
         }

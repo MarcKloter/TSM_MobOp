@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import mse.ch.tsm_mobop_app.R;
 
@@ -36,6 +37,8 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
 
     private FloatingActionButton checkoutFAB;
     private RecyclerView cartRecyclerView;
+
+    private CartRecyclerViewAdapter cartRecyclerViewAdapter;
     private LinearLayout cartEmptyView;
 
     /**
@@ -54,6 +57,7 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
+        //Initialisation of button actions
         FloatingActionButton scanFab = (FloatingActionButton) view.findViewById(R.id.cart_scan);
         scanFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -63,14 +67,14 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
             }
         });
 
-        cartCounter = view.findViewById(R.id.cart_count);
-        cartTotal = view.findViewById(R.id.cart_total);
-
-        checkoutFAB = view.findViewById(R.id.cart_checkout);
-        cartRecyclerView = view.findViewById(R.id.cart_recycler_view);
-        cartEmptyView = view.findViewById(R.id.cart_empty_view);
-
-        setupRecyclerView(cartRecyclerView);
+        //Initialisation of attributes
+        this.cartCounter = view.findViewById(R.id.cart_count);
+        this.cartTotal = view.findViewById(R.id.cart_total);
+        this.checkoutFAB = view.findViewById(R.id.cart_checkout);
+        this.cartRecyclerView = view.findViewById(R.id.cart_recycler_view);
+        this.cartEmptyView = view.findViewById(R.id.cart_empty_view);
+        this.cartRecyclerViewAdapter = new CartRecyclerViewAdapter(MockContent.ITEMS, this, cListener);
+        this.setupRecyclerView(cartRecyclerView);
 
         return view;
     }
@@ -82,7 +86,7 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
             RecyclerView recyclerView = (RecyclerView) view;
 
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new CartRecyclerViewAdapter(MockContent.ITEMS, this, cListener));
+            recyclerView.setAdapter(this.cartRecyclerViewAdapter);
 
             // add divider
             recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -122,15 +126,13 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
             @Override
             public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 int position = viewHolder.getAdapterPosition();
-                CartRecyclerViewAdapter testAdapter = (CartRecyclerViewAdapter)recyclerView.getAdapter();
                 return super.getSwipeDirs(recyclerView, viewHolder);
             }
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 int swipedPosition = viewHolder.getAdapterPosition();
-                CartRecyclerViewAdapter adapter = (CartRecyclerViewAdapter)recyclerView.getAdapter();
-                adapter.remove(swipedPosition);
+                cartRecyclerViewAdapter.remove(swipedPosition);
             }
 
             @Override
@@ -196,6 +198,17 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
     private void setTotal(BigDecimal total) {
         cartTotal.setText(String.format(" %.2f CHF", total));
     }
+
+    public void addOrIncreaseItemInCart(CartItem item){
+        try{
+            int existingPos = this.cartRecyclerViewAdapter.getItemPositionById(item.getId());
+            this.cartRecyclerViewAdapter.increaseQuantityByPosition(existingPos);
+        }
+        catch (CartItemNotFoundException ex){
+            this.cartRecyclerViewAdapter.add(item);
+        }
+    }
+
 
     @Override
     public void onAttach(Context context) {
