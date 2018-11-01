@@ -53,7 +53,7 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
                 this.loadDataFromId(result);
             } else if (resultCode == RESULT_CANCELED) {
                 setResult(RESULT_CANCELED);
-                //TODO: Delte follwing line
+                //TODO: Delete follwing line and uncomment finish()
                 this.loadDataFromId("2352");
                 //finish();
             }
@@ -79,6 +79,11 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
         }
     }
 
+    /**
+     * Function is called when the data is loaded from the online database
+     * @param object Is the object which the Listener wants to receive from the DataController.
+     *               In this case the ArticleDataModel
+     */
     @Override
     public void onDataReceived(Object object) {
         try{
@@ -99,12 +104,18 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
         this.startQrCodeScanner();
     }
 
+    /**
+     * Method to set the loading fragment as the active fragment
+     */
     private void setLoadingFragment(){
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.scan_fragment, SCAN_LOADING_FRAGMENT)
                 .commit();
     }
 
+    /**
+     * Method to set the error fragment as the active fragment
+     */
     private void setQrErrorFragment(){
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.scan_fragment, SCAN_ERROR_FRAGMENT)
