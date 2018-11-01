@@ -9,6 +9,7 @@ import android.widget.TextView;
 import mse.ch.tsm_mobop_app.R;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.ViewHolder> {
@@ -16,6 +17,12 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
     private final List<CartItem> cartContent;
     private final CartRecyclerViewListener crvListener;
     private final CartListener cListener;
+
+    public CartRecyclerViewAdapter(CartRecyclerViewListener crvListener, CartListener cListener) {
+        this.cartContent = new ArrayList<>();
+        this.crvListener = crvListener;
+        this.cListener = cListener;
+    }
 
     public CartRecyclerViewAdapter(List<CartItem> items, CartRecyclerViewListener crvListener, CartListener cListener) {
         this.cartContent = items;

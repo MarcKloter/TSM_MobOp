@@ -27,7 +27,8 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener 
 
     @Override
     public void onProceedToCheckout() {
-        // TODO: open checkout fragment
+        Intent intent = new Intent(PurchaseActivity.this, CheckoutActivity.class);
+        startActivity(intent);
     }
 
     @Override
