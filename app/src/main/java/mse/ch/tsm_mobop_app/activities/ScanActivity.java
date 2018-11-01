@@ -30,12 +30,12 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
+        this.setLoadingFragment();
         this.startQrCodeScanner();
     }
 
     protected void startQrCodeScanner(){
         try {
-
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // "PRODUCT_MODE for bar codes
             startActivityForResult(intent, REQUEST_CODE);
@@ -53,20 +53,21 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
                 this.loadDataFromId(result);
             } else if (resultCode == RESULT_CANCELED) {
                 setResult(RESULT_CANCELED);
-                finish();
+                //TODO: Delte follwing line
+                this.loadDataFromId("2352");
+                //finish();
             }
         }
     }
 
-    protected void loadDataFromId(String qrResult){
+    protected void loadDataFromId(final String qrResult){
         try{
             int uid = Integer.parseInt(qrResult);
-            this.articleDataController.getArticleById(uid, this);
+            articleDataController.getArticleById(uid, this);
         }
         catch (Exception ex){
-            this.changeFragmentToError = true;
+            changeFragmentToError = true;
         }
-
     }
 
     @Override

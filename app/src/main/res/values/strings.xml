@@ -9,6 +9,8 @@
     <string name="cart_empty_state_subtitle">Scan an item to add it to your cart.</string>
     <string name="cart_empty_state">Nothing to see, move on!</string>
 
+    <!-- Strings for scan-package -->
+    <string name="scan_loading_message">Retrieving item information</string>
     <string name="qr_error_message">There was an error retrieving the item information.</string>
     <string name="qr_error_button">Retry</string>
 
