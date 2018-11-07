@@ -9,6 +9,7 @@ import android.widget.TextView;
 import mse.ch.tsm_mobop_app.R;
 
 import java.math.BigDecimal;
+import java.util.Iterator;
 import java.util.List;
 
 public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.ViewHolder> {
@@ -50,7 +51,7 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
     }
 
     public int getItemPositionById(String uid) throws CartItemNotFoundException{
-        CartItem searchItem = new CartItem(uid, "searchItem", new BigDecimal(1), new BigDecimal(1));
+        CartItem searchItem = new CartItem(uid, "searchItem", "description", new BigDecimal(1), new BigDecimal(1));
         if(!cartContent.contains(searchItem)){
             throw new CartItemNotFoundException("Item not in cart!");
         }
@@ -92,6 +93,18 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
             total = total.add(item.getPrice());
         }
         return total;
+    }
+
+    public void removeZeroQuantityEntries() {
+        Iterator<CartItem> it = cartContent.iterator();
+        while (it.hasNext()) {
+            CartItem item = it.next();
+            if(item.getQuantity().equals(BigDecimal.ZERO)) {
+                //remove(cartContent.indexOf(item));
+                it.remove();
+                crvListener.onCartContentChanged(getCartCount(), getTotal());
+            }
+        }
     }
 
     @Override

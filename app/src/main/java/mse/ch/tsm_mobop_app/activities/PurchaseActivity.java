@@ -1,6 +1,7 @@
 package mse.ch.tsm_mobop_app.activities;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -10,9 +11,10 @@ import mse.ch.tsm_mobop_app.R;
 import mse.ch.tsm_mobop_app.cart.CartFragment;
 import mse.ch.tsm_mobop_app.cart.CartItem;
 import mse.ch.tsm_mobop_app.cart.CartListener;
+import mse.ch.tsm_mobop_app.details.DetailsFragment;
 import mse.ch.tsm_mobop_app.data.ArticleDataModel;
 
-public class PurchaseActivity extends AppCompatActivity implements CartListener {
+public class PurchaseActivity extends AppCompatActivity implements CartListener, DetailsFragment.DetailsListener {
 
     private static final String INTENT_RETURN_EXTRA = "ARTICLE";
     private static final int SCAN_REQUEST_CODE = 21435;
@@ -32,8 +34,24 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener 
 
     @Override
     public void onItemClick(CartItem item) {
-        // TODO: open item details fragment
+        // TODO: handle landscape
+        DetailsFragment details = new DetailsFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("item", item);
+        details.setArguments(args);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.purchase_fragmet, details);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
+
+    @Override
+    public void onAcceptButtonPress() {
+        // return from details to cart
+        CART_FRAGMENT.removeItemsWithZeroQuantity();
+        getSupportFragmentManager().popBackStackImmediate();
+    }
+
     @Override
     public void onScanButtonPress() {
         Intent intent = new Intent(PurchaseActivity.this, ScanActivity.class);
@@ -67,6 +85,6 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener 
     }
 
     private CartItem convertFromArticleDataModel(ArticleDataModel model){
-        return new CartItem("" + model.getUid(), model.getName(), new BigDecimal(model.getPricePerQty()), new BigDecimal(1), model.getQuantityType().toString());
+        return new CartItem("" + model.getUid(), model.getName(), model.getDescription(), new BigDecimal(model.getPricePerQty()), new BigDecimal(1), model.getQuantityType().toString());
     }
 }

@@ -2,29 +2,33 @@ package mse.ch.tsm_mobop_app.cart;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
-public class CartItem {
+public class CartItem implements Serializable {
     //TODO: Refactor this model class
     private final String id;
     private final String label;
     private final BigDecimal price;
     private BigDecimal quantity;
     private final String quantityLabel;
+    private final String description;
 
-    public CartItem(String id, String label, BigDecimal price, BigDecimal quantity) {
+    public CartItem(String id, String label, String description, BigDecimal price, BigDecimal quantity) {
         this.id = id;
         this.label = label;
+        this.description = description;
         this.price = price;
         this.quantity = quantity;
         this.quantityLabel = "";
     }
 
-    public CartItem(String id, String label, BigDecimal price, BigDecimal quantity, String quantity_label) {
+    public CartItem(String id, String label, String description, BigDecimal price, BigDecimal quantity, String quantity_label) {
         this.id = id;
         this.label = label;
+        this.description = description;
         this.price = price;
         this.quantity = quantity;
         this.quantityLabel = quantity_label;
@@ -51,10 +55,31 @@ public class CartItem {
         return format.format(getPrice());
     }
 
+    public String getFormattedBasePrice() {
+        DecimalFormat format = new DecimalFormat("0.00");
+        return format.format(price);
+    }
+
     public String getFormattedQuantity() {
         double d = quantity.doubleValue();
         DecimalFormat format = new DecimalFormat("0.###");
         return format.format(d) + quantityLabel;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getQuantityLabel() {
+        return quantityLabel;
+    }
+
+    public BigDecimal getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
     }
 
     public String getId() {

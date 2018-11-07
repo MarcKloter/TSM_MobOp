@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TSM_MobOp-app</string>
+    <string name="app_name">Self-Cashier-App</string>
 
     <string name="onboard_message">Start shopping by scanning an item</string>
 
@@ -11,6 +11,12 @@
 
     <string name="qr_error_message">There was an error retrieving the item information.</string>
     <string name="qr_error_button">Retry</string>
+
+    <string name="product_image_placeholder">product picture</string>
+    <string name="detail_quantity">Quantity:</string>
+    <string name="detail_amount">Amount:</string>
+    <string name="detail_minus_contentDescription">Decrease quantity</string>
+    <string name="detail_plus_contentDescription">Increase quantity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

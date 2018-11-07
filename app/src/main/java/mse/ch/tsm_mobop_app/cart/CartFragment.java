@@ -58,7 +58,7 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         //Initialisation of button actions
-        FloatingActionButton scanFab = (FloatingActionButton) view.findViewById(R.id.cart_scan);
+        FloatingActionButton scanFab = view.findViewById(R.id.cart_scan);
         scanFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (cListener != null) {
@@ -209,6 +209,9 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
         }
     }
 
+    public void removeItemsWithZeroQuantity() {
+        this.cartRecyclerViewAdapter.removeZeroQuantityEntries();
+    }
 
     @Override
     public void onAttach(Context context) {
