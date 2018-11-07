@@ -4,7 +4,8 @@
     <string name="onboard_message">Start shopping by scanning an item</string>
 
     <!-- String for cart-package -->
-    <string name="cart_total">Total:</string>
+    <string name="cart_total">Total:&#160;</string>
+    <string name="cart_total_placeholder">0.00 CHF</string>
     <string name="cart_empty_state_title">Your cart is empty</string>
     <string name="cart_empty_state_subtitle">Scan an item to add it to your cart.</string>
     <string name="cart_empty_state">Nothing to see, move on!</string>
@@ -16,8 +17,8 @@
 
     <!-- Strings for details-package -->
     <string name="product_image_placeholder">product picture</string>
-    <string name="detail_quantity">Quantity:</string>
-    <string name="detail_amount">Amount:</string>
+    <string name="detail_quantity">Quantity:&#160;</string>
+    <string name="detail_amount">Amount:&#160;</string>
     <string name="detail_minus_contentDescription">Decrease quantity</string>
     <string name="detail_plus_contentDescription">Increase quantity</string>
 

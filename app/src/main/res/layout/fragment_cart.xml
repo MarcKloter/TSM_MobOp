@@ -37,10 +37,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/cart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/footer"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/cart_count"
@@ -90,6 +92,7 @@
             android:layout_marginTop="@dimen/text_margin"
             android:layout_marginBottom="@dimen/text_margin"
             android:fontFamily="@font/roboto_black"
+            android:text="@string/cart_total_placeholder"
             android:textSize="24sp" />
     </LinearLayout>
 
@@ -105,7 +108,8 @@
         android:src="@drawable/ic_checkout"
         android:tint="@color/colorPrimary"
         app:backgroundTint="@android:color/white"
-        app:rippleColor="@color/colorPrimaryLight" />
+        app:rippleColor="@color/colorPrimaryLight"
+        android:visibility="gone"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/cart_scan"

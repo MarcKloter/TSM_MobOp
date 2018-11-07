@@ -40,6 +40,7 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
 
     private CartRecyclerViewAdapter cartRecyclerViewAdapter;
     private LinearLayout cartEmptyView;
+    private LinearLayout cart;
 
     /**
      * Mandatory empty constructor for the fragment manager
@@ -66,14 +67,6 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
                 }
             }
         });
-        FloatingActionButton checkoutFab = (FloatingActionButton) view.findViewById(R.id.cart_checkout);
-        checkoutFab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (cListener != null) {
-                    cListener.onProceedToCheckout();
-                }
-            }
-        });
 
         //Initialisation of attributes
         this.cartCounter = view.findViewById(R.id.cart_count);
@@ -81,8 +74,17 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
         this.checkoutFAB = view.findViewById(R.id.cart_checkout);
         this.cartRecyclerView = view.findViewById(R.id.cart_recycler_view);
         this.cartEmptyView = view.findViewById(R.id.cart_empty_view);
+        this.cart = view.findViewById(R.id.cart);
         this.cartRecyclerViewAdapter = new CartRecyclerViewAdapter(this, cListener);
         this.setupRecyclerView(cartRecyclerView);
+
+        checkoutFAB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (cListener != null) {
+                    cListener.onProceedToCheckout();
+                }
+            }
+        });
 
         return view;
     }
@@ -190,11 +192,11 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
         // toggle empty state
         if(itemCount == 0) {
             checkoutFAB.hide();
-            cartRecyclerView.setVisibility(View.GONE);
+            cart.setVisibility(LinearLayout.GONE);
             cartEmptyView.setVisibility(LinearLayout.VISIBLE);
         } else {
             checkoutFAB.show();
-            cartRecyclerView.setVisibility(View.VISIBLE);
+            cart.setVisibility(LinearLayout.VISIBLE);
             cartEmptyView.setVisibility(LinearLayout.GONE);
         }
     }
@@ -204,7 +206,7 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
     }
 
     private void setTotal(BigDecimal total) {
-        cartTotal.setText(String.format(" %.2f CHF", total));
+        cartTotal.setText(String.format("%.2f CHF", total));
     }
 
     public void addOrIncreaseItemInCart(CartItem item){
