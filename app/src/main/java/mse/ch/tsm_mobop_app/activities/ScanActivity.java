@@ -19,7 +19,7 @@ import mse.ch.tsm_mobop_app.scan.ScanLoadingFragment;
 public class ScanActivity extends AppCompatActivity implements OnDataReceivedEventListener, ScanErrorFragment.ScanErrorInteractionListener {
 
     private static final String INTENT_RETURN_EXTRA = "ARTICLE";
-    private static final int REQUEST_CODE = 5234;
+    private static final int QR_REQUEST_CODE = 5234;
     private static final ScanErrorFragment SCAN_ERROR_FRAGMENT = new ScanErrorFragment();
     private static final ScanLoadingFragment SCAN_LOADING_FRAGMENT = new ScanLoadingFragment();
 
@@ -30,15 +30,15 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
+        this.setLoadingFragment();
         this.startQrCodeScanner();
     }
 
     protected void startQrCodeScanner(){
         try {
-
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");
             intent.putExtra("SCAN_MODE", "QR_CODE_MODE"); // "PRODUCT_MODE for bar codes
-            startActivityForResult(intent, REQUEST_CODE);
+            startActivityForResult(intent, QR_REQUEST_CODE);
         } catch (Exception e) {
             Uri marketUri = Uri.parse("market://details?id=com.google.zxing.client.android");
             Intent marketIntent = new Intent(Intent.ACTION_VIEW,marketUri);
@@ -47,26 +47,27 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == QR_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 String result = intent.getStringExtra("SCAN_RESULT");
                 this.loadDataFromId(result);
             } else if (resultCode == RESULT_CANCELED) {
                 setResult(RESULT_CANCELED);
-                finish();
+                //TODO: Delete follwing line and uncomment finish()
+                this.loadDataFromId("2352");
+                //finish();
             }
         }
     }
 
-    protected void loadDataFromId(String qrResult){
+    protected void loadDataFromId(final String qrResult){
         try{
             int uid = Integer.parseInt(qrResult);
-            this.articleDataController.getArticleById(uid, this);
+            articleDataController.getArticleById(uid, this);
         }
         catch (Exception ex){
-            this.changeFragmentToError = true;
+            changeFragmentToError = true;
         }
-
     }
 
     @Override
@@ -78,6 +79,11 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
         }
     }
 
+    /**
+     * Function is called when the data is loaded from the online database
+     * @param object Is the object which the Listener wants to receive from the DataController.
+     *               In this case the ArticleDataModel
+     */
     @Override
     public void onDataReceived(Object object) {
         try{
@@ -98,12 +104,18 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
         this.startQrCodeScanner();
     }
 
+    /**
+     * Method to set the loading fragment as the active fragment
+     */
     private void setLoadingFragment(){
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.scan_fragment, SCAN_LOADING_FRAGMENT)
                 .commit();
     }
 
+    /**
+     * Method to set the error fragment as the active fragment
+     */
     private void setQrErrorFragment(){
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.scan_fragment, SCAN_ERROR_FRAGMENT)

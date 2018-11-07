@@ -66,6 +66,14 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
                 }
             }
         });
+        FloatingActionButton checkoutFab = (FloatingActionButton) view.findViewById(R.id.cart_checkout);
+        checkoutFab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (cListener != null) {
+                    cListener.onProceedToCheckout();
+                }
+            }
+        });
 
         //Initialisation of attributes
         this.cartCounter = view.findViewById(R.id.cart_count);
@@ -73,7 +81,7 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
         this.checkoutFAB = view.findViewById(R.id.cart_checkout);
         this.cartRecyclerView = view.findViewById(R.id.cart_recycler_view);
         this.cartEmptyView = view.findViewById(R.id.cart_empty_view);
-        this.cartRecyclerViewAdapter = new CartRecyclerViewAdapter(MockContent.ITEMS, this, cListener);
+        this.cartRecyclerViewAdapter = new CartRecyclerViewAdapter(this, cListener);
         this.setupRecyclerView(cartRecyclerView);
 
         return view;

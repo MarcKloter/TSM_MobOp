@@ -3,20 +3,28 @@
 
     <string name="onboard_message">Start shopping by scanning an item</string>
 
+    <!-- String for cart-package -->
     <string name="cart_total">Total:</string>
-
     <string name="cart_empty_state_title">Your cart is empty</string>
     <string name="cart_empty_state_subtitle">Scan an item to add it to your cart.</string>
     <string name="cart_empty_state">Nothing to see, move on!</string>
 
+    <!-- Strings for scan-package -->
+    <string name="scan_loading_message">Retrieving item information</string>
     <string name="qr_error_message">There was an error retrieving the item information.</string>
     <string name="qr_error_button">Retry</string>
 
+    <!-- Strings for details-package -->
     <string name="product_image_placeholder">product picture</string>
     <string name="detail_quantity">Quantity:</string>
     <string name="detail_amount">Amount:</string>
     <string name="detail_minus_contentDescription">Decrease quantity</string>
     <string name="detail_plus_contentDescription">Increase quantity</string>
+
+    <!-- Strings for the checkout-package -->
+    <string name="checkout_loading_message">Processing your payment</string>
+    <string name="checkout_payment_successful">Payment Successful</string>
+    <string name="checkout_thank_you">Thank you for your purchase</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
