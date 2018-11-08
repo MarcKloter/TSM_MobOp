@@ -80,6 +80,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
                 CART_FRAGMENT.addOrIncreaseItemInCart(this.convertFromArticleDataModel(article));
             }
             catch (Exception ex){
+                // TODO: Scan Error Fragment
                 System.out.println(ex.getMessage());
             }
         }

@@ -37,6 +37,8 @@ public class DetailsFragment extends Fragment {
     private TextView amountText;
     private TextView amountLabel;
 
+    private int newQuantity;
+
     public DetailsFragment() {
         // Required empty public constructor
     }
@@ -64,7 +66,6 @@ public class DetailsFragment extends Fragment {
 
         this.quantityText = view.findViewById(R.id.detail_quantity_text);
         this.quantityLabel = view.findViewById(R.id.detail_quantity);
-        if(item.getQuantityLabel().isEmpty()) updateQuantityLabel();
         this.quantityDecrease = view.findViewById(R.id.detail_quantity_minus);
         this.quantityIncrease = view.findViewById(R.id.detail_quantity_plus);
 
@@ -75,6 +76,9 @@ public class DetailsFragment extends Fragment {
         showQuantityInformation();
         setupControlButtons();
         setupFAB(view);
+
+        newQuantity = item.getQuantity().intValueExact();
+        if(item.getQuantityLabel().isEmpty()) updateQuantityLabel();
 
         return view;
     }
@@ -103,7 +107,7 @@ public class DetailsFragment extends Fragment {
         quantityDecrease.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(item.getQuantity().compareTo(BigDecimal.ZERO) > 0) {
-                    item.setQuantity(item.getQuantity().subtract(new BigDecimal(1)));
+                    newQuantity--;
                     updateQuantityLabel();
                 }
             }
@@ -111,14 +115,14 @@ public class DetailsFragment extends Fragment {
 
         quantityIncrease.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                item.setQuantity(item.getQuantity().add(new BigDecimal(1)));
+                newQuantity++;
                 updateQuantityLabel();
             }
         });
     }
 
     private void updateQuantityLabel() {
-        String val = Integer.toString(item.getQuantity().intValueExact());
+        String val = Integer.toString(newQuantity);
         quantityLabel.setText(val);
     }
 

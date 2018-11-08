@@ -106,8 +106,7 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
         Iterator<CartItem> it = cartContent.iterator();
         while (it.hasNext()) {
             CartItem item = it.next();
-            if(item.getQuantity().equals(BigDecimal.ZERO)) {
-                //remove(cartContent.indexOf(item));
+            if(item.getQuantityLabel().isEmpty() && item.getQuantity().equals(BigDecimal.ZERO)) {
                 it.remove();
                 crvListener.onCartContentChanged(getCartCount(), getTotal());
             }
