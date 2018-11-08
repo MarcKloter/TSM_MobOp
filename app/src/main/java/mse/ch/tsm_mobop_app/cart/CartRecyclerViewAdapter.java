@@ -93,7 +93,7 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
             cartContent.remove(index);
         else
             this.cartContent.get(index).setQuantity(item.getQuantity());
-        
+
         notifyDataSetChanged();
         crvListener.onCartContentChanged(getCartCount(), getTotal());
     }

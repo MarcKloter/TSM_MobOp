@@ -1,6 +1,7 @@
 package mse.ch.tsm_mobop_app.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,7 +43,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
         args.putSerializable("item", item);
         details.setArguments(args);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.purchase_fragmet, details);
+        fragmentTransaction.add(R.id.cart, details);
         fragmentTransaction.hide(CART_FRAGMENT);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
@@ -64,7 +65,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
 
     private void setCartFragment(){
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.purchase_fragmet, CART_FRAGMENT)
+                .replace(R.id.cart, CART_FRAGMENT)
                 .commit();
     }
 
