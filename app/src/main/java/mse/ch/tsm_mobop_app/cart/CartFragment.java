@@ -219,8 +219,8 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
         }
     }
 
-    public void removeItemsWithZeroQuantity() {
-        this.cartRecyclerViewAdapter.removeZeroQuantityEntries();
+    public void removeItem(CartItem item) {
+        this.cartRecyclerViewAdapter.removeItem(item);
     }
 
     @Override

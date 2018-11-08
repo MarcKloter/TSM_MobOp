@@ -131,7 +131,8 @@ public class DetailsFragment extends Fragment {
         acceptFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // TODO: landscape
-                dListener.onAcceptButtonPress();
+                item.setQuantity(new BigDecimal(newQuantity));
+                dListener.onAcceptButtonPress(item);
             }
         });
     }
@@ -154,6 +155,6 @@ public class DetailsFragment extends Fragment {
     }
 
     public interface DetailsListener {
-        void onAcceptButtonPress();
+        void onAcceptButtonPress(CartItem item);
     }
 }

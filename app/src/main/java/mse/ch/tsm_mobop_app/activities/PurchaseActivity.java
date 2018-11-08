@@ -47,9 +47,10 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
     }
 
     @Override
-    public void onAcceptButtonPress() {
+    public void onAcceptButtonPress(CartItem item) {
         // return from details to cart
-        CART_FRAGMENT.removeItemsWithZeroQuantity();
+        if(item.getQuantity().equals(BigDecimal.ZERO))
+            CART_FRAGMENT.removeItem(item);
         getSupportFragmentManager().popBackStackImmediate();
     }
 
