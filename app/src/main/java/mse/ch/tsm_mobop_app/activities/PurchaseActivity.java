@@ -83,14 +83,12 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
                 CART_FRAGMENT.addOrIncreaseItemInCart(this.convertFromArticleDataModel(article));
             }
             catch (Exception ex){
-                // TODO: Scan Error Fragment
                 System.out.println(ex.getMessage());
             }
         }
     }
 
-    //TODO: Map Quantity Type to reasonable string
     private CartItem convertFromArticleDataModel(ArticleDataModel model){
-        return new CartItem("" + model.getUid(), model.getName(), model.getDescription(), new BigDecimal(model.getPricePerQty()), new BigDecimal(1), model.getQuantityType().toString());
+        return new CartItem("" + model.getUid(), model.getName(), model.getDescription(), new BigDecimal(model.getPricePerQty()), new BigDecimal(1), model.getQuantityType().getDesc());
     }
 }
