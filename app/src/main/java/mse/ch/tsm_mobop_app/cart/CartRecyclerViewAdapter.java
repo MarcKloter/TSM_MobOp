@@ -87,7 +87,13 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
     }
 
     public void updateItemQuantity(CartItem item) {
-        this.cartContent.get(cartContent.indexOf(item)).setQuantity(item.getQuantity());
+        int index = cartContent.indexOf(item);
+        // remove the item if it's quantity was set to 0
+        if(item.getQuantity().equals(BigDecimal.ZERO))
+            cartContent.remove(index);
+        else
+            this.cartContent.get(index).setQuantity(item.getQuantity());
+        
         notifyDataSetChanged();
         crvListener.onCartContentChanged(getCartCount(), getTotal());
     }
@@ -106,12 +112,6 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
             total = total.add(item.getPrice());
         }
         return total;
-    }
-
-    public void removeItem(CartItem item) {
-        cartContent.remove(cartContent.indexOf(item));
-        notifyDataSetChanged();
-        crvListener.onCartContentChanged(getCartCount(), getTotal());
     }
 
     @Override

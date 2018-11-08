@@ -54,10 +54,6 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
         getSupportFragmentManager().popBackStackImmediate();
 
         CART_FRAGMENT.updateItemQuantity(item);
-
-        // remove the item if it's quantity was set to 0
-        if(item.getQuantity().equals(BigDecimal.ZERO))
-            CART_FRAGMENT.removeItem(item);
     }
 
     @Override

@@ -227,10 +227,6 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
         this.cartRecyclerViewAdapter.updateItemQuantity(item);
     }
 
-    public void removeItem(CartItem item) {
-        this.cartRecyclerViewAdapter.removeItem(item);
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
