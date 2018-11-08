@@ -26,6 +26,9 @@
     <string name="checkout_loading_message">Processing your payment</string>
     <string name="checkout_payment_successful">Payment Successful</string>
     <string name="checkout_thank_you">Thank you for your purchase</string>
+    <string name="checkout_ask_title">Proceed with checkout?</string>
+    <string name="checkout_ask_yes">Yes</string>
+    <string name="checkout_ask_no">No</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

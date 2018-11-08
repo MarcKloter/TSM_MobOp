@@ -11,6 +11,7 @@ import mse.ch.tsm_mobop_app.R;
 import mse.ch.tsm_mobop_app.cart.CartFragment;
 import mse.ch.tsm_mobop_app.cart.CartItem;
 import mse.ch.tsm_mobop_app.cart.CartListener;
+import mse.ch.tsm_mobop_app.checkout.AskForCheckoutFragment;
 import mse.ch.tsm_mobop_app.details.DetailsFragment;
 import mse.ch.tsm_mobop_app.data.ArticleDataModel;
 
@@ -29,8 +30,10 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
 
     @Override
     public void onProceedToCheckout() {
-        Intent intent = new Intent(PurchaseActivity.this, CheckoutActivity.class);
-        startActivity(intent);
+
+
+        AskForCheckoutFragment newFragment = new AskForCheckoutFragment();
+        newFragment.show(getSupportFragmentManager(), "checkout");
     }
 
     @Override
@@ -81,13 +84,12 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
                 CART_FRAGMENT.addOrIncreaseItemInCart(this.convertFromArticleDataModel(article));
             }
             catch (Exception ex){
-                // TODO: Scan Error Fragment
                 System.out.println(ex.getMessage());
             }
         }
     }
 
     private CartItem convertFromArticleDataModel(ArticleDataModel model){
-        return new CartItem("" + model.getUid(), model.getName(), model.getDescription(), new BigDecimal(model.getPricePerQty()), new BigDecimal(1), model.getQuantityType().toString());
+        return new CartItem("" + model.getUid(), model.getName(), model.getDescription(), new BigDecimal(model.getPricePerQty()), new BigDecimal(1), model.getQuantityType().getDesc());
     }
 }
