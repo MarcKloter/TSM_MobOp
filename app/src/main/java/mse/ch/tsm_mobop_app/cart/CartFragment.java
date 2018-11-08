@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 import mse.ch.tsm_mobop_app.R;
 
@@ -225,6 +226,14 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
 
     public void updateItemQuantity(CartItem item) {
         this.cartRecyclerViewAdapter.updateItemQuantity(item);
+    }
+
+    public List<CartItem> getAllItemsInCart(){
+        return this.cartRecyclerViewAdapter.getCartContent();
+    }
+
+    public BigDecimal getTotal(){
+        return this.cartRecyclerViewAdapter.getTotal();
     }
 
     @Override

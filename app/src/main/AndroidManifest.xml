@@ -20,5 +20,5 @@
         <activity android:name=".activities.ScanActivity"></activity>
         <activity android:name=".activities.CheckoutActivity"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 </manifest>
