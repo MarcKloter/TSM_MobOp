@@ -190,7 +190,11 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
         setTotal(total);
 
         // toggle empty state
-        if(itemCount == 0) {
+        adjustVisibility();
+    }
+
+    private void adjustVisibility() {
+        if(cartRecyclerViewAdapter.getCartCount() == 0) {
             checkoutFAB.hide();
             cart.setVisibility(LinearLayout.GONE);
             cartEmptyView.setVisibility(LinearLayout.VISIBLE);
@@ -217,6 +221,10 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
         catch (CartItemNotFoundException ex){
             this.cartRecyclerViewAdapter.add(item);
         }
+    }
+
+    public void updateItemQuantity(CartItem item) {
+        this.cartRecyclerViewAdapter.updateItemQuantity(item);
     }
 
     public void removeItem(CartItem item) {

@@ -30,8 +30,6 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
 
     @Override
     public void onProceedToCheckout() {
-
-
         AskForCheckoutFragment newFragment = new AskForCheckoutFragment();
         newFragment.show(getSupportFragmentManager(), "checkout");
     }
@@ -44,7 +42,8 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
         args.putSerializable("item", item);
         details.setArguments(args);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.purchase_fragmet, details);
+        fragmentTransaction.add(R.id.purchase_fragmet, details);
+        fragmentTransaction.hide(CART_FRAGMENT);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -52,9 +51,13 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
     @Override
     public void onAcceptButtonPress(CartItem item) {
         // return from details to cart
+        getSupportFragmentManager().popBackStackImmediate();
+
+        CART_FRAGMENT.updateItemQuantity(item);
+
+        // remove the item if it's quantity was set to 0
         if(item.getQuantity().equals(BigDecimal.ZERO))
             CART_FRAGMENT.removeItem(item);
-        getSupportFragmentManager().popBackStackImmediate();
     }
 
     @Override

@@ -86,6 +86,12 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
         crvListener.onCartContentChanged(getCartCount(), getTotal());
     }
 
+    public void updateItemQuantity(CartItem item) {
+        this.cartContent.get(cartContent.indexOf(item)).setQuantity(item.getQuantity());
+        notifyDataSetChanged();
+        crvListener.onCartContentChanged(getCartCount(), getTotal());
+    }
+
     public int getCartCount() {
         int count = 0;
         for(CartItem item : cartContent) {
@@ -104,6 +110,7 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
 
     public void removeItem(CartItem item) {
         cartContent.remove(cartContent.indexOf(item));
+        notifyDataSetChanged();
         crvListener.onCartContentChanged(getCartCount(), getTotal());
     }
 

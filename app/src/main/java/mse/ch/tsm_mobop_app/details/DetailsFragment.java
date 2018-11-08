@@ -73,14 +73,17 @@ public class DetailsFragment extends Fragment {
         this.amountLabel = view.findViewById(R.id.detail_amount);
         amountLabel.setText(item.getFormattedQuantity());
 
+        setQuantityInformation();
         showQuantityInformation();
         setupControlButtons();
         setupFAB(view);
 
-        newQuantity = item.getQuantity().intValueExact();
-        if(item.getQuantityLabel().isEmpty()) updateQuantityLabel();
-
         return view;
+    }
+
+    private void setQuantityInformation() {
+        this.newQuantity = item.getQuantity().intValueExact();
+        if(item.getQuantityLabel().isEmpty()) updateQuantityLabel();
     }
 
     private void showQuantityInformation() {
