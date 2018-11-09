@@ -46,6 +46,7 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
         }
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == QR_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {

@@ -3,7 +3,6 @@ package mse.ch.tsm_mobop_app.activities;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
@@ -37,6 +36,16 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // check the intent origin
+        Intent intent = this.getIntent();
+        if(intent != null) {
+            // if this is called from onboarding, start with scanning an item
+            String origin = intent.getExtras().getString("origin");
+            if(origin.equals("onboarding"))
+                onScanButtonPress();
+        }
+
         setContentView(R.layout.activity_purchase);
         this.setCartFragment();
     }
@@ -49,7 +58,6 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
 
     @Override
     public void onItemClick(CartItem item) {
-        // TODO: handle landscape
         DetailsFragment details = new DetailsFragment();
         Bundle args = new Bundle();
         args.putSerializable("item", item);
@@ -81,8 +89,11 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
                 .commit();
     }
 
-    //This method needs to handle all possible results. To add a new one, add a request code
-    //to the class and a if-statement in this method.
+    /**
+     * This method needs to handle all possible results.
+     * To add a new one, add a request code to the class and a if-statement in this method.
+     */
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == SCAN_REQUEST_CODE) {
             this.handleScanResult(resultCode, intent);
@@ -94,14 +105,14 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
             try {
                 ArticleDataModel article = (ArticleDataModel) intent.getSerializableExtra(SCAN_INTENT_RETURN_EXTRA);
                 CART_FRAGMENT.addOrIncreaseItemInCart(this.convertFromArticleDataModel(article));
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+            } catch (Exception e) {
+                Log.e("handleScanResult", e.getLocalizedMessage());
             }
         }
     }
 
     private CartItem convertFromArticleDataModel(ArticleDataModel model) {
-        return new CartItem("" + model.getUid(), model.getName(), model.getDescription(), new BigDecimal(model.getPricePerQty()), new BigDecimal(1), model.getQuantityType().getDesc());
+        return new CartItem("" + model.getUid(), model.getName(), model.getDescription(), BigDecimal.valueOf(model.getPricePerQty()), new BigDecimal(1), model.getQuantityType().getDesc());
     }
 
     /**
@@ -110,7 +121,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
     @Override
     public void onProceedButtonClick() {
         Intent intent = new Intent(PurchaseActivity.this, CheckoutActivity.class);
-        List<CartItem> items = this.CART_FRAGMENT.getAllItemsInCart();
+        List<CartItem> items = CART_FRAGMENT.getAllItemsInCart();
         String user = getUniqueIMEIId(getBaseContext());
 
         List<OrderArticleDataModel> articlesForOrder = new ArrayList<>();
@@ -119,7 +130,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
             articlesForOrder.add(new OrderArticleDataModel(uid, current.getQuantity().doubleValue()));
         }
 
-        OrderDataModelRecuded order = new OrderDataModelRecuded(this.CART_FRAGMENT.getTotal().doubleValue(), user, "CREDIT-CARD", articlesForOrder);
+        OrderDataModelRecuded order = new OrderDataModelRecuded(CART_FRAGMENT.getTotal().doubleValue(), user, "CREDIT-CARD", articlesForOrder);
         intent.putExtra(CHECKOUT_INTENT_EXTRA, order);
         startActivity(intent);
     }
@@ -152,7 +163,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
                 return android.os.Build.SERIAL;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("getUniqueIMEIId", e.getLocalizedMessage());
         }
         return "not_found";
     }

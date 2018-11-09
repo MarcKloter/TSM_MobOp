@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.ViewHolder> {
+public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerViewAdapter.CartItemViewHolder> {
 
     private final List<CartItem> cartContent;
     private final CartRecyclerViewListener crvListener;
@@ -32,15 +32,15 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CartItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.viewholder_cart_item, parent, false);
-        return new ViewHolder(view);
+        return new CartItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = cartContent.get(position);
+    public void onBindViewHolder(final CartItemViewHolder holder, int position) {
+        holder.setItem(cartContent.get(position));
         holder.mQuantityView.setText(cartContent.get(position).getFormattedQuantity());
         holder.mLabelView.setText(cartContent.get(position).getLabel());
         holder.mPriceView.setText(cartContent.get(position).getFormattedPrice());
@@ -51,7 +51,7 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
             @Override
             public void onClick(View v) {
                 if (null != cListener) {
-                    cListener.onItemClick(holder.mItem);
+                    cListener.onItemClick(holder.getItem());
                 }
             }
         });
@@ -134,19 +134,27 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
         return cartContent.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class CartItemViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mQuantityView;
         public final TextView mLabelView;
         public final TextView mPriceView;
-        public CartItem mItem;
+        private CartItem mItem;
 
-        public ViewHolder(View view) {
+        public CartItemViewHolder(View view) {
             super(view);
             mView = view;
-            mQuantityView = (TextView) view.findViewById(R.id.item_quantity);
-            mLabelView = (TextView) view.findViewById(R.id.item_label);
-            mPriceView = (TextView) view.findViewById(R.id.item_price);
+            mQuantityView = view.findViewById(R.id.item_quantity);
+            mLabelView =  view.findViewById(R.id.item_label);
+            mPriceView = view.findViewById(R.id.item_price);
+        }
+
+        public CartItem getItem() {
+            return mItem;
+        }
+
+        public void setItem(CartItem item) {
+            mItem = item;
         }
 
         @Override

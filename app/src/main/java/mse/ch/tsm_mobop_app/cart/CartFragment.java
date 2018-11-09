@@ -14,17 +14,13 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-
 import mse.ch.tsm_mobop_app.R;
 
 /**
@@ -37,7 +33,6 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
     private TextView cartTotal;
 
     private FloatingActionButton checkoutFAB;
-    private RecyclerView cartRecyclerView;
 
     private CartRecyclerViewAdapter cartRecyclerViewAdapter;
     private LinearLayout cartEmptyView;
@@ -47,11 +42,6 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
      * Mandatory empty constructor for the fragment manager
      */
     public CartFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -73,7 +63,7 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
         this.cartCounter = view.findViewById(R.id.cart_count);
         this.cartTotal = view.findViewById(R.id.cart_total);
         this.checkoutFAB = view.findViewById(R.id.cart_checkout);
-        this.cartRecyclerView = view.findViewById(R.id.cart_recycler_view);
+        RecyclerView cartRecyclerView = view.findViewById(R.id.cart_recycler_view);
         this.cartEmptyView = view.findViewById(R.id.cart_empty_view);
         this.cart = view.findViewById(R.id.cart);
         this.cartRecyclerViewAdapter = new CartRecyclerViewAdapter(this, cListener);
@@ -136,7 +126,6 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
 
             @Override
             public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                int position = viewHolder.getAdapterPosition();
                 return super.getSwipeDirs(recyclerView, viewHolder);
             }
 

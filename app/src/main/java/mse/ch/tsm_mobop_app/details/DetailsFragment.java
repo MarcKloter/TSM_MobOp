@@ -1,34 +1,23 @@
 package mse.ch.tsm_mobop_app.details;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import java.math.BigDecimal;
-
 import mse.ch.tsm_mobop_app.R;
 import mse.ch.tsm_mobop_app.cart.CartItem;
-import mse.ch.tsm_mobop_app.cart.CartListener;
 
 
 public class DetailsFragment extends Fragment {
     private DetailsListener dListener;
 
     private CartItem item;
-    private TextView itemLabel;
-    private TextView itemPrice;
-    private TextView itemDescription;
 
     private TextView quantityText;
     private TextView quantityLabel;
@@ -44,25 +33,20 @@ public class DetailsFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
 
         this.item = (CartItem) getArguments().getSerializable("item");
 
-        this.itemLabel = view.findViewById(R.id.item_label);
-        this.itemLabel.setText(this.item.getLabel());
+        TextView itemLabel = view.findViewById(R.id.item_label);
+        itemLabel.setText(this.item.getLabel());
 
-        this.itemPrice = view.findViewById(R.id.item_price);
-        this.itemPrice.setText(String.format("CHF %s", this.item.getFormattedBasePrice()));
+        TextView itemPrice = view.findViewById(R.id.item_price);
+        itemPrice.setText(String.format("CHF %s", this.item.getFormattedBasePrice()));
 
-        this.itemDescription = view.findViewById(R.id.item_description);
-        this.itemDescription.setText(this.item.getDescription());
+        TextView itemDescription = view.findViewById(R.id.item_description);
+        itemDescription.setText(this.item.getDescription());
 
         this.quantityText = view.findViewById(R.id.detail_quantity_text);
         this.quantityLabel = view.findViewById(R.id.detail_quantity);
@@ -133,7 +117,6 @@ public class DetailsFragment extends Fragment {
         FloatingActionButton acceptFab = view.findViewById(R.id.detail_accept);
         acceptFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // TODO: landscape
                 item.setQuantity(new BigDecimal(newQuantity));
                 dListener.onAcceptButtonPress(item);
             }

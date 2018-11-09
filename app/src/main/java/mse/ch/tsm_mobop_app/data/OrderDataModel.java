@@ -2,14 +2,13 @@ package mse.ch.tsm_mobop_app.data;
 
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
  * Data model for a single order in the database with its UID.
  */
 public class OrderDataModel extends OrderDataModelRecuded implements Serializable {
-    public int uid;
+    private int uid;
 
     public OrderDataModel() {
         super();

@@ -23,17 +23,12 @@ public class ScanErrorFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_scan_error, container, false);
 
-        Button retryBut = (Button) view.findViewById(R.id.error_retry);
+        Button retryBut = view.findViewById(R.id.error_retry);
         retryBut.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (mListener != null) {

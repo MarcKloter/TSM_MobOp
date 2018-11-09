@@ -11,12 +11,14 @@ public class CheckoutTimer {
     public void startTimer(CheckoutTimerListener checkoutTimerListener){
         this.checkoutTimerListener = checkoutTimerListener;
         Thread thread = new Thread(){
+            @Override
             public void run(){
                 try{
                     Thread.sleep(CHECKOUT_TIMER_TIMOUT_MS);
                 }
                 catch (InterruptedException ex){
                     //Sleeping thread was interrupted. No problem.
+                    Thread.currentThread().interrupt();
                 }
                 finally {
                     notifyTimerExpired();

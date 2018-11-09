@@ -1,14 +1,11 @@
 package mse.ch.tsm_mobop_app.cart;
 
-import android.util.Log;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class CartItem implements Serializable {
-    //TODO: Refactor this model class
     private final String id;
     private final String label;
     private final BigDecimal price;
@@ -25,13 +22,13 @@ public class CartItem implements Serializable {
         this.quantityLabel = "";
     }
 
-    public CartItem(String id, String label, String description, BigDecimal price, BigDecimal quantity, String quantity_label) {
+    public CartItem(String id, String label, String description, BigDecimal price, BigDecimal quantity, String quantityLabel) {
         this.id = id;
         this.label = label;
         this.description = description;
         this.price = price;
         this.quantity = quantity;
-        this.quantityLabel = quantity_label;
+        this.quantityLabel = quantityLabel;
     }
 
     public int getItemCount() {

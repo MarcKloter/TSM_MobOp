@@ -1,11 +1,9 @@
 package mse.ch.tsm_mobop_app.onboard;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,18 +23,10 @@ public class OnboardFragment extends Fragment {
     }
 
     /**
-     * Creates a new instance of the OnboardFragment.
-     *
-     * @return A new instance of fragment OnboardFragment.
+     * Creates a new instance of the OnboardFragment
      */
-    public static OnboardFragment newInstance(String param1, String param2) {
-        OnboardFragment fragment = new OnboardFragment();
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public static OnboardFragment newInstance() {
+        return new OnboardFragment();
     }
 
     @Override
@@ -45,7 +35,7 @@ public class OnboardFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_onboard, container, false);
 
-        FloatingActionButton scanFab = (FloatingActionButton) view.findViewById(R.id.onboard_scan);
+        FloatingActionButton scanFab = view.findViewById(R.id.onboard_scan);
         scanFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (mListener != null) {
