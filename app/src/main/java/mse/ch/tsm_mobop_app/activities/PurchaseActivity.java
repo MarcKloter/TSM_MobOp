@@ -126,7 +126,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
 
     /**
      * This method was copied from stackoverflow just to retrieve the IMEI number of the phone,
-     * to have something to identify the user.
+     * to have something to identify the user, as we don't have any real user in this project state.
      * https://stackoverflow.com/questions/48556566/best-way-to-get-device-imei-number-android-java-programmatically-with-onrequestp?noredirect=1
      * @param context
      * @return
@@ -135,14 +135,9 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
         try {
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return "RANDOM-USER " + new Random().nextInt(500000); //Changed that line
+                //If the activity don't has the permission to get the IMEI of the phone, just return
+                //a random user. This is just for development, as we don't have any real users.
+                return "RANDOM-USER " + new Random().nextInt(500000);
             }
             String imei = telephonyManager.getDeviceId();
             Log.e("imei", "=" + imei);
