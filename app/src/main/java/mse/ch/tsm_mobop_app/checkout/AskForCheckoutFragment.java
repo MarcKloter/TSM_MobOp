@@ -4,21 +4,20 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import mse.ch.tsm_mobop_app.R;
-import mse.ch.tsm_mobop_app.activities.CheckoutActivity;
-import mse.ch.tsm_mobop_app.activities.PurchaseActivity;
 
+/**
+ * This Fragment is to display the question if you really want to checkout or not.
+ */
 public class AskForCheckoutFragment extends DialogFragment {
 
+    private AskForCheckoutFragmentListener mListener;
 
     public AskForCheckoutFragment() {
         // Required empty public constructor
@@ -32,8 +31,7 @@ public class AskForCheckoutFragment extends DialogFragment {
         builder.setMessage(R.string.checkout_ask_title)
                 .setPositiveButton(R.string.checkout_ask_yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(getContext(), CheckoutActivity.class);
-                        startActivity(intent);
+                        mListener.onProceedButtonClick();
                     }
                 })
                 .setNegativeButton(R.string.checkout_ask_no, new DialogInterface.OnClickListener() {
@@ -55,10 +53,26 @@ public class AskForCheckoutFragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        if (context instanceof AskForCheckoutFragmentListener) {
+            mListener = (AskForCheckoutFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement ScanErrorInteractionListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * This interface describes a method which shall handle the process to do when the user
+     * accepted this dialog and confirmed to proceed with the checkout.
+     */
+    public interface AskForCheckoutFragmentListener {
+        void onProceedButtonClick();
     }
 }

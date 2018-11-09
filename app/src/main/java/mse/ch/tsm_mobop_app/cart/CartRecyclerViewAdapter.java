@@ -114,6 +114,21 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
         return total;
     }
 
+    public void removeZeroQuantityEntries() {
+        Iterator<CartItem> it = cartContent.iterator();
+        while (it.hasNext()) {
+            CartItem item = it.next();
+            if(item.getQuantityLabel().isEmpty() && item.getQuantity().equals(BigDecimal.ZERO)) {
+                it.remove();
+                crvListener.onCartContentChanged(getCartCount(), getTotal());
+            }
+        }
+    }
+
+    public List<CartItem> getCartContent() {
+        return cartContent;
+    }
+
     @Override
     public int getItemCount() {
         return cartContent.size();

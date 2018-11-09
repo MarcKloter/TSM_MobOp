@@ -48,7 +48,6 @@ public class ScanErrorFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        super.onAttach(context);
 
         if (context instanceof ScanErrorInteractionListener) {
             mListener = (ScanErrorInteractionListener) context;

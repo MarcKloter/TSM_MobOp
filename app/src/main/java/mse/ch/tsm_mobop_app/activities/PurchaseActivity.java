@@ -1,24 +1,36 @@
 package mse.ch.tsm_mobop_app.activities;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import mse.ch.tsm_mobop_app.R;
 import mse.ch.tsm_mobop_app.cart.CartFragment;
 import mse.ch.tsm_mobop_app.cart.CartItem;
 import mse.ch.tsm_mobop_app.cart.CartListener;
 import mse.ch.tsm_mobop_app.checkout.AskForCheckoutFragment;
+import mse.ch.tsm_mobop_app.data.OrderArticleDataModel;
+import mse.ch.tsm_mobop_app.data.OrderDataModelRecuded;
 import mse.ch.tsm_mobop_app.details.DetailsFragment;
 import mse.ch.tsm_mobop_app.data.ArticleDataModel;
 
-public class PurchaseActivity extends AppCompatActivity implements CartListener, DetailsFragment.DetailsListener {
+public class PurchaseActivity extends AppCompatActivity implements CartListener, DetailsFragment.DetailsListener, AskForCheckoutFragment.AskForCheckoutFragmentListener {
 
-    private static final String INTENT_RETURN_EXTRA = "ARTICLE";
+    private static final String SCAN_INTENT_RETURN_EXTRA = "ARTICLE";
+    private static final String CHECKOUT_INTENT_EXTRA = "ORDER";
     private static final int SCAN_REQUEST_CODE = 21435;
     private static final CartFragment CART_FRAGMENT = new CartFragment(); //This class holds the cart fragment
 
@@ -63,7 +75,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
         startActivityForResult(intent, SCAN_REQUEST_CODE);
     }
 
-    private void setCartFragment(){
+    private void setCartFragment() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.cart, CART_FRAGMENT)
                 .commit();
@@ -77,19 +89,71 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
         }
     }
 
-    private void handleScanResult(int resultCode, Intent intent){
-        if(resultCode == RESULT_OK){
-            try{
-                ArticleDataModel article = (ArticleDataModel)intent.getSerializableExtra(INTENT_RETURN_EXTRA);
+    private void handleScanResult(int resultCode, Intent intent) {
+        if (resultCode == RESULT_OK) {
+            try {
+                ArticleDataModel article = (ArticleDataModel) intent.getSerializableExtra(SCAN_INTENT_RETURN_EXTRA);
                 CART_FRAGMENT.addOrIncreaseItemInCart(this.convertFromArticleDataModel(article));
-            }
-            catch (Exception ex){
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
         }
     }
 
-    private CartItem convertFromArticleDataModel(ArticleDataModel model){
+    private CartItem convertFromArticleDataModel(ArticleDataModel model) {
         return new CartItem("" + model.getUid(), model.getName(), model.getDescription(), new BigDecimal(model.getPricePerQty()), new BigDecimal(1), model.getQuantityType().getDesc());
+    }
+
+    /**
+     * Method to proceed with the checkout if the user confirmed the chechout in the dialog.
+     */
+    @Override
+    public void onProceedButtonClick() {
+        Intent intent = new Intent(PurchaseActivity.this, CheckoutActivity.class);
+        List<CartItem> items = this.CART_FRAGMENT.getAllItemsInCart();
+        String user = getUniqueIMEIId(getBaseContext());
+
+        List<OrderArticleDataModel> articlesForOrder = new ArrayList<>();
+        for(CartItem current : items){
+            int uid = Integer.parseInt(current.getId());
+            articlesForOrder.add(new OrderArticleDataModel(uid, current.getQuantity().doubleValue()));
+        }
+
+        OrderDataModelRecuded order = new OrderDataModelRecuded(this.CART_FRAGMENT.getTotal().doubleValue(), user, "CREDIT-CARD", articlesForOrder);
+        intent.putExtra(CHECKOUT_INTENT_EXTRA, order);
+        startActivity(intent);
+    }
+
+    /**
+     * This method was copied from stackoverflow just to retrieve the IMEI number of the phone,
+     * to have something to identify the user.
+     * https://stackoverflow.com/questions/48556566/best-way-to-get-device-imei-number-android-java-programmatically-with-onrequestp?noredirect=1
+     * @param context
+     * @return
+     */
+    private static String getUniqueIMEIId(Context context) {
+        try {
+            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return "RANDOM-USER " + new Random().nextInt(500000); //Changed that line
+            }
+            String imei = telephonyManager.getDeviceId();
+            Log.e("imei", "=" + imei);
+            if (imei != null && !imei.isEmpty()) {
+                return imei;
+            } else {
+                return android.os.Build.SERIAL;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "not_found";
     }
 }

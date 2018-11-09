@@ -9,6 +9,8 @@ import mse.ch.tsm_mobop_app.checkout.CheckoutLoadingFragment;
 import mse.ch.tsm_mobop_app.checkout.CheckoutTimer;
 import mse.ch.tsm_mobop_app.checkout.CheckoutTimerListener;
 import mse.ch.tsm_mobop_app.checkout.CheckoutSuccessfulFragment;
+import mse.ch.tsm_mobop_app.data.OrderDataController;
+import mse.ch.tsm_mobop_app.data.OrderDataModelRecuded;
 
 /**
  * This Activity handles the checkout process and the final of the app flow.
@@ -17,6 +19,8 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutSucce
 
     private static final CheckoutLoadingFragment CHECKOUT_LOADING_FRAGMENT = new CheckoutLoadingFragment();
     private static final CheckoutSuccessfulFragment CHECKOUT_SUCCESSFUL_FRAGMENT = new CheckoutSuccessfulFragment();
+    private static final String CHECKOUT_INTENT_EXTRA = "ORDER";
+    private OrderDataController orderDataController;
     private CheckoutTimer checkoutTimer = new CheckoutTimer();
     private CheckoutState lastState;
 
@@ -26,6 +30,8 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutSucce
         setContentView(R.layout.activity_checkout);
         this.setCheckoutLoadingFragment();
         this.lastState = CheckoutState.CHECKOUT_STARTED;
+        this.orderDataController = OrderDataController.getInstance();
+        this.writePurchaseToDb();
         this.handleState();
     }
 
@@ -94,6 +100,15 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutSucce
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
         startActivity(intent);
+    }
+
+    /**
+     * Method to write the current order to the firebase db.
+     */
+    private void writePurchaseToDb(){
+        Intent intent = getIntent();
+        OrderDataModelRecuded order = (OrderDataModelRecuded) intent.getSerializableExtra(CHECKOUT_INTENT_EXTRA);
+        this.orderDataController.saveNewOrder(order);
     }
 
     /**
