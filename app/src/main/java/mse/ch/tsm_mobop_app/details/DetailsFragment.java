@@ -93,7 +93,7 @@ public class DetailsFragment extends Fragment {
     private void setupControlButtons() {
         quantityDecrease.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(item.getQuantity().compareTo(BigDecimal.ZERO) > 0) {
+                if(newQuantity > 0) {
                     newQuantity--;
                     updateQuantityLabel();
                 }
