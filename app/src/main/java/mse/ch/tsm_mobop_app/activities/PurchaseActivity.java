@@ -125,7 +125,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
     public void onProceedButtonClick() {
         Intent intent = new Intent(PurchaseActivity.this, CheckoutActivity.class);
         List<CartItem> items = CART_FRAGMENT.getAllItemsInCart();
-        String user = getUniqueIMEIId(getBaseContext());
+        String user = getCurrentUser(getBaseContext());
 
         List<OrderArticleDataModel> articlesForOrder = new ArrayList<>();
         for(CartItem current : items){
@@ -139,28 +139,10 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
     }
 
     /**
-     * This method was copied from stackoverflow just to retrieve the IMEI number of the phone,
-     * to have something to identify the user, as we don't have any real user in this project state.
-     * https://stackoverflow.com/questions/48556566/best-way-to-get-device-imei-number-android-java-programmatically-with-onrequestp?noredirect=1
+     * This method is just to generate a random user ID without any meaning, to have something
+     * to identify the user, as we don't have any real user in this project state.
      */
-    private static String getUniqueIMEIId(Context context) {
-        try {
-            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                //If the activity don't has the permission to get the IMEI of the phone, just return
-                //a random user. This is just for development, as we don't have any real users.
-                return "RANDOM-USER " + new Random().nextInt(500000);
-            }
-            String imei = telephonyManager.getDeviceId();
-            Log.e("imei", "=" + imei);
-            if (imei != null && !imei.isEmpty()) {
-                return imei;
-            } else {
-                return android.os.Build.SERIAL;
-            }
-        } catch (Exception e) {
-            Log.e("getUniqueIMEIId", e.getLocalizedMessage());
-        }
-        return "not_found";
+    private static String getCurrentUser(Context context) {
+        return "RANDOM-USER " + new Random().nextInt(500000);
     }
 }
