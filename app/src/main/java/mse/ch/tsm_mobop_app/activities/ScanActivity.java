@@ -53,10 +53,7 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
                 String result = intent.getStringExtra("SCAN_RESULT");
                 this.loadDataFromId(result);
             } else if (resultCode == RESULT_CANCELED) {
-                setResult(RESULT_CANCELED);
-                //TODO: Delete follwing line and uncomment finish()
-                this.loadDataFromId("2352");
-                //finish();
+                finish();
             }
         }
     }
@@ -88,11 +85,18 @@ public class ScanActivity extends AppCompatActivity implements OnDataReceivedEve
     @Override
     public void onDataReceived(Object object) {
         try{
+
             ArticleDataModel article = (ArticleDataModel)object;
-            Intent result = new Intent();
-            result.putExtra(SCAN_INTENT_RETURN_EXTRA, article);
-            setResult(RESULT_OK, result);
-            finish();
+            if(article.getUid() == 0){
+                this.changeFragmentToError = false;
+                this.setQrErrorFragment();
+            }
+            else{
+                Intent result = new Intent();
+                result.putExtra(SCAN_INTENT_RETURN_EXTRA, article);
+                setResult(RESULT_OK, result);
+                finish();
+            }
         }
         catch (Exception ex){
             this.setQrErrorFragment();
