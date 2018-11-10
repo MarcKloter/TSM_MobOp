@@ -41,9 +41,12 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
         Intent intent = this.getIntent();
         if(intent != null) {
             // if this is called from onboarding, start with scanning an item
-            String origin = intent.getExtras().getString("origin");
-            if(origin.equals("onboarding"))
-                onScanButtonPress();
+            Bundle extras = intent.getExtras();
+            if(extras != null) {
+                String origin = extras.getString("origin");
+                if (origin != null && origin.equals("onboarding"))
+                    onScanButtonPress();
+            }
         }
 
         setContentView(R.layout.activity_purchase);
@@ -139,8 +142,6 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
      * This method was copied from stackoverflow just to retrieve the IMEI number of the phone,
      * to have something to identify the user, as we don't have any real user in this project state.
      * https://stackoverflow.com/questions/48556566/best-way-to-get-device-imei-number-android-java-programmatically-with-onrequestp?noredirect=1
-     * @param context
-     * @return
      */
     private static String getUniqueIMEIId(Context context) {
         try {

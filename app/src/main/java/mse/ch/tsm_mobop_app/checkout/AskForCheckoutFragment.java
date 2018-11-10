@@ -34,11 +34,7 @@ public class AskForCheckoutFragment extends DialogFragment {
                         mListener.onProceedButtonClick();
                     }
                 })
-                .setNegativeButton(R.string.checkout_ask_no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        return;
-                    }
-                });
+                .setNegativeButton(R.string.checkout_ask_no, null);
         // Create the AlertDialog object and return it
         return builder.create();
     }

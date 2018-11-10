@@ -125,11 +125,6 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
             }
 
             @Override
-            public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                return super.getSwipeDirs(recyclerView, viewHolder);
-            }
-
-            @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 int swipedPosition = viewHolder.getAdapterPosition();
                 cartRecyclerViewAdapter.remove(swipedPosition);
