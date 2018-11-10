@@ -1,5 +1,7 @@
 package mse.ch.tsm_mobop_app.data;
 
+import android.util.Log;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +31,7 @@ public class OrderDataController {
         this.orderReference = database.getReference(ORDER_REFERENCE);
     }
 
-    //TODO: Implement Transaction -> Multi-user safety!
+    //This method is not thread-safe! Implement Transaction -> Multi-user safety!
     public void saveNewOrder(final OrderDataModelRecuded order){
 
         //Get latest Order-ID and wait for the store process
@@ -49,12 +51,13 @@ public class OrderDataController {
 
                 @Override
                 public void onCancelled(DatabaseError error) {
-                    throw new RuntimeException("Not implemented!");
+                    //do nothing. Would need to create new error handling with own exception
                 }
             });
         }
         catch (Exception ex){
-
+            //Would need to implement proper exception handling here.
+            System.out.println("Error while saving order instance: " + ex.getMessage());
         }
     }
 

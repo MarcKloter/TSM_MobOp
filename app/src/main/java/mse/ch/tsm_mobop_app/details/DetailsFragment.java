@@ -129,8 +129,7 @@ public class DetailsFragment extends Fragment {
         if (context instanceof DetailsListener) {
             dListener = (DetailsListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+            //do nothing. Would need to create new error handling with own exception
         }
     }
 

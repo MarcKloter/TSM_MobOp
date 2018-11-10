@@ -46,7 +46,7 @@ public class ArticleDataController {
 
                 @Override
                 public void onCancelled(DatabaseError error) {
-                    throw new RuntimeException("Not implemented!");
+                    //do nothing. Would need to create new error handling with own exception
                 }
             });
         }

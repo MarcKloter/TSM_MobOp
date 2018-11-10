@@ -53,8 +53,7 @@ public class AskForCheckoutFragment extends DialogFragment {
         if (context instanceof AskForCheckoutFragmentListener) {
             mListener = (AskForCheckoutFragmentListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement ScanErrorInteractionListener");
+            //do nothing. Would need to create new error handling with own exception
         }
     }
 

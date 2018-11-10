@@ -54,8 +54,7 @@ public class OnboardFragment extends Fragment {
         if (context instanceof OnboardInteractionListener) {
             mListener = (OnboardInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            //do nothing. Would need to create new error handling with own exception
         }
     }
 

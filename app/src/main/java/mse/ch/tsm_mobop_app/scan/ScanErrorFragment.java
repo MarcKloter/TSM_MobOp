@@ -47,8 +47,7 @@ public class ScanErrorFragment extends Fragment {
         if (context instanceof ScanErrorInteractionListener) {
             mListener = (ScanErrorInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement ScanErrorInteractionListener");
+            //do nothing. Would need to create new error handling with own exception
         }
     }
 
