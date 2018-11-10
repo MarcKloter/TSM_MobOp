@@ -118,9 +118,15 @@ public class DetailsFragment extends Fragment {
         acceptFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 item.setQuantity(new BigDecimal(newQuantity));
-                dListener.onAcceptButtonPress(item);
+                handleAcceptButtonClicked();
             }
         });
+    }
+
+    public void handleAcceptButtonClicked(){
+        if (dListener != null) {
+            dListener.onAcceptButtonPress(item);
+        }
     }
 
     @Override
@@ -132,6 +138,10 @@ public class DetailsFragment extends Fragment {
             //do nothing. Would need to create new error handling with own exception
         }
     }
+    public void attachManual(DetailsListener listener){
+        dListener =  listener;
+    }
+
 
     @Override
     public void onDetach() {

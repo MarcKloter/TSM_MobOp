@@ -114,7 +114,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
         }
     }
 
-    private CartItem convertFromArticleDataModel(ArticleDataModel model) {
+    public CartItem convertFromArticleDataModel(ArticleDataModel model) {
         return new CartItem("" + model.getUid(), model.getName(), model.getDescription(), BigDecimal.valueOf(model.getPricePerQty()), new BigDecimal(1), model.getQuantityType().getDesc());
     }
 

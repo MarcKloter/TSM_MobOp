@@ -31,9 +31,7 @@ public class ScanErrorFragment extends Fragment {
         Button retryBut = view.findViewById(R.id.error_retry);
         retryBut.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onRetryButtonPress();
-                }
+                handleRetryButtonClicked();
             }
         });
 
@@ -50,6 +48,17 @@ public class ScanErrorFragment extends Fragment {
             //do nothing. Would need to create new error handling with own exception
         }
     }
+
+    public void handleRetryButtonClicked(){
+        if (mListener != null) {
+            mListener.onRetryButtonPress();
+        }
+    }
+
+    public void attachManual(ScanErrorInteractionListener listener){
+        mListener =  listener;
+    }
+
 
     @Override
     public void onDetach() {
