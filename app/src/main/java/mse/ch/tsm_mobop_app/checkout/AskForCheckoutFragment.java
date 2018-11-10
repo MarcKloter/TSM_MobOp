@@ -31,12 +31,16 @@ public class AskForCheckoutFragment extends DialogFragment {
         builder.setMessage(R.string.checkout_ask_title)
                 .setPositiveButton(R.string.checkout_ask_yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        mListener.onProceedButtonClick();
+                        handleProceedButtonClicked();
                     }
                 })
                 .setNegativeButton(R.string.checkout_ask_no, null);
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    public void handleProceedButtonClicked(){
+        mListener.onProceedButtonClick();
     }
 
     @Override
@@ -53,8 +57,7 @@ public class AskForCheckoutFragment extends DialogFragment {
         if (context instanceof AskForCheckoutFragmentListener) {
             mListener = (AskForCheckoutFragmentListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement ScanErrorInteractionListener");
+            //do nothing. Would need to create new error handling with own exception
         }
     }
 
@@ -62,6 +65,10 @@ public class AskForCheckoutFragment extends DialogFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void attachManual(AskForCheckoutFragmentListener listener){
+        mListener =  listener;
     }
 
     /**

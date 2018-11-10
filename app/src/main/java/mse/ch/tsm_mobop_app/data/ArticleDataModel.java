@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Data model for a single article in the database with its UID.
  */
 public class ArticleDataModel extends ArticleDataModelReduced implements Serializable {
-    private int uid;
+    private int uid = 0;
 
     public ArticleDataModel(String name, String description, QuantityType quantityType, double pricePerQty, int uid) {
         super(name, description, quantityType, pricePerQty);

@@ -22,13 +22,6 @@ public class OnboardFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Creates a new instance of the OnboardFragment
-     */
-    public static OnboardFragment newInstance() {
-        return new OnboardFragment();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,14 +31,19 @@ public class OnboardFragment extends Fragment {
         FloatingActionButton scanFab = view.findViewById(R.id.onboard_scan);
         scanFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onScanButtonPress();
-                }
+                handlePlusButtonClicked();
             }
         });
 
         return view;
     }
+
+    public void handlePlusButtonClicked(){
+        if (mListener != null) {
+            mListener.onScanButtonPress();
+        }
+    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -54,9 +52,12 @@ public class OnboardFragment extends Fragment {
         if (context instanceof OnboardInteractionListener) {
             mListener = (OnboardInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            //do nothing. Would need to create new error handling with own exception
         }
+    }
+
+    public void attachManual(OnboardInteractionListener listener){
+        mListener =  listener;
     }
 
     @Override

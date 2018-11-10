@@ -22,7 +22,9 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutSucce
     private static final String CHECKOUT_INTENT_EXTRA = "ORDER";
     private OrderDataController orderDataController;
     private CheckoutTimer checkoutTimer = new CheckoutTimer();
-    private CheckoutState lastState;
+    private CheckoutState lastState = CheckoutState.CHECKOUT_STARTED;
+    private int timeToWaitPaymentMs = 3000;
+    private int timeToWaitSuccessMs = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +49,12 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutSucce
         switch(this.lastState){
 
             case CHECKOUT_STARTED:
-                this.checkoutTimer.startTimer(this);
+                this.checkoutTimer.startTimer(this, timeToWaitPaymentMs);
                 this.lastState = CheckoutState.CHECKOUT_ONGOING;
                 break;
             case CHECKOUT_ONGOING:
                 this.setCheckoutSuccessfulFragment();
-                this.checkoutTimer.startTimer(this);
+                this.checkoutTimer.startTimer(this, timeToWaitSuccessMs);
                 this.lastState = CheckoutState.CHECKOUT_DONE;
                 break;
             case CHECKOUT_DONE:
@@ -95,10 +97,8 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutSucce
      * This method restarts the whole app and resets the history (you are not able to go back then).
      */
     private void restartAppFlow(){
-        Intent intent = getBaseContext().getPackageManager()
-                .getLaunchIntentForPackage(getBaseContext().getPackageName() );
-
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
+        Intent intent = new Intent(CheckoutActivity.this, OnboardActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
@@ -122,7 +122,7 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutSucce
     /**
      * Different state for the local state machine.
      */
-    private enum CheckoutState {
+    public enum CheckoutState {
         CHECKOUT_STARTED,
         CHECKOUT_ONGOING,
         CHECKOUT_DONE,

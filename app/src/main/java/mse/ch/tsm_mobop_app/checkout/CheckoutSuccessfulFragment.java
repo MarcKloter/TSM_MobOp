@@ -41,8 +41,7 @@ public class CheckoutSuccessfulFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            //do nothing. Would need to create new error handling with own exception
         }
     }
 

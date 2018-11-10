@@ -5,16 +5,15 @@ package mse.ch.tsm_mobop_app.checkout;
  * background for a few seconds) or to delay the procedure and display the success message.
  */
 public class CheckoutTimer {
-    private static final int CHECKOUT_TIMER_TIMOUT_MS = 4000;
     private CheckoutTimerListener checkoutTimerListener;
 
-    public void startTimer(CheckoutTimerListener checkoutTimerListener){
+    public void startTimer(CheckoutTimerListener checkoutTimerListener, final int timeToWait){
         this.checkoutTimerListener = checkoutTimerListener;
         Thread thread = new Thread(){
             @Override
             public void run(){
                 try{
-                    Thread.sleep(CHECKOUT_TIMER_TIMOUT_MS);
+                    Thread.sleep(timeToWait);
                 }
                 catch (InterruptedException ex){
                     //Sleeping thread was interrupted. No problem.
