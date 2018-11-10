@@ -39,6 +39,9 @@ public class CartItem implements Serializable {
         this.quantity = this.quantity.add(new BigDecimal(1));
     }
 
+    /**
+     * Returns the price of all pieces of this item
+     */
     public BigDecimal getPrice() {
         return quantityLabel.isEmpty() ? price.multiply(quantity) : price;
     }
@@ -52,6 +55,9 @@ public class CartItem implements Serializable {
         return format.format(getPrice());
     }
 
+    /**
+     * Returns the price of a single piece of the item
+     */
     public String getFormattedBasePrice() {
         DecimalFormat format = new DecimalFormat("0.00");
         return format.format(price);

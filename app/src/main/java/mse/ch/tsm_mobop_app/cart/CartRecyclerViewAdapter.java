@@ -20,15 +20,15 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
     private final CartListener cListener;
 
     public CartRecyclerViewAdapter(CartRecyclerViewListener crvListener, CartListener cListener) {
-        this.cartContent = new ArrayList<>();
         this.crvListener = crvListener;
         this.cListener = cListener;
+        this.cartContent = new ArrayList<>();
     }
 
-    public CartRecyclerViewAdapter(List<CartItem> items, CartRecyclerViewListener crvListener, CartListener cListener) {
-        this.cartContent = items;
+    public CartRecyclerViewAdapter(CartRecyclerViewListener crvListener, CartListener cListener, List<CartItem> content) {
         this.crvListener = crvListener;
         this.cListener = cListener;
+        this.cartContent = content;
     }
 
     @Override
@@ -112,17 +112,6 @@ public class CartRecyclerViewAdapter extends RecyclerView.Adapter<CartRecyclerVi
             total = total.add(item.getPrice());
         }
         return total;
-    }
-
-    public void removeZeroQuantityEntries() {
-        Iterator<CartItem> it = cartContent.iterator();
-        while (it.hasNext()) {
-            CartItem item = it.next();
-            if(item.getQuantityLabel().isEmpty() && item.getQuantity().equals(BigDecimal.ZERO)) {
-                it.remove();
-                crvListener.onCartContentChanged(getCartCount(), getTotal());
-            }
-        }
     }
 
     public List<CartItem> getCartContent() {
