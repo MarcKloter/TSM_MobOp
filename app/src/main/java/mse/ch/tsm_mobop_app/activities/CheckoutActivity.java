@@ -95,10 +95,8 @@ public class CheckoutActivity extends AppCompatActivity implements CheckoutSucce
      * This method restarts the whole app and resets the history (you are not able to go back then).
      */
     private void restartAppFlow(){
-        Intent intent = getBaseContext().getPackageManager()
-                .getLaunchIntentForPackage(getBaseContext().getPackageName() );
-
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
+        Intent intent = new Intent(CheckoutActivity.this, OnboardActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
