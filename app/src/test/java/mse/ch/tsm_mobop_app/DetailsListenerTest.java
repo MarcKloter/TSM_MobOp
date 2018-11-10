@@ -14,12 +14,6 @@ public class DetailsListenerTest implements DetailsFragment.DetailsListener {
         DetailsFragment fragment = new DetailsFragment();
         fragment.attachManual(this);
         fragment.handleAcceptButtonClicked();
-        try{
-            Thread.sleep(10);
-        }
-        catch (Exception ex){
-            Assert.assertFalse(true);
-        }
         Assert.assertTrue(this.callbackCalled);
     }
 

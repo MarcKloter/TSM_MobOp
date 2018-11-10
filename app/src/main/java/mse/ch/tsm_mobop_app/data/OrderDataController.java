@@ -57,7 +57,7 @@ public class OrderDataController {
         }
         catch (Exception ex){
             //Would need to implement proper exception handling here.
-            System.out.println("Error while saving order instance: " + ex.getMessage());
+            Log.e("saveNewOrder","Error while saving order instance: " + ex.getMessage());
         }
     }
 

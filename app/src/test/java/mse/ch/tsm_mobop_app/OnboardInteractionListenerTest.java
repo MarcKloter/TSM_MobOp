@@ -13,12 +13,6 @@ public class OnboardInteractionListenerTest implements OnboardFragment.OnboardIn
         OnboardFragment fragment = new OnboardFragment();
         fragment.attachManual(this);
         fragment.handlePlusButtonClicked();
-        try{
-            Thread.sleep(10);
-        }
-        catch (Exception ex){
-            Assert.assertFalse(true);
-        }
         Assert.assertTrue(this.callbackCalled);
     }
 

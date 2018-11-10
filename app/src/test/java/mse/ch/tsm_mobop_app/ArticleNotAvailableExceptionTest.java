@@ -16,7 +16,7 @@ public class ArticleNotAvailableExceptionTest {
             throw new ArticleNotAvailableException(EXCEPTION_MESSAGE);
         }
         catch (ArticleNotAvailableException ex){
-            Assert.assertEquals(ex.getMessage(), EXCEPTION_MESSAGE);
+            Assert.assertEquals(EXCEPTION_MESSAGE, ex.getMessage());
         }
     }
 
@@ -26,7 +26,7 @@ public class ArticleNotAvailableExceptionTest {
             throw new ArticleNotAvailableException(THROWABLE);
         }
         catch (ArticleNotAvailableException ex){
-            Assert.assertEquals(ex.getCause(), THROWABLE);
+            Assert.assertEquals(THROWABLE, ex.getCause());
         }
     }
 
@@ -36,8 +36,8 @@ public class ArticleNotAvailableExceptionTest {
             throw new ArticleNotAvailableException(EXCEPTION_MESSAGE, THROWABLE);
         }
         catch (ArticleNotAvailableException ex){
-            Assert.assertEquals(ex.getMessage(), EXCEPTION_MESSAGE);
-            Assert.assertEquals(ex.getCause(), THROWABLE);
+            Assert.assertEquals(EXCEPTION_MESSAGE, ex.getMessage());
+            Assert.assertEquals(THROWABLE, ex.getCause());
         }
     }
 }

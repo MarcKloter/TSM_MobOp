@@ -14,12 +14,6 @@ public class AskForCheckoutFragmentListenerTest implements AskForCheckoutFragmen
         AskForCheckoutFragment fragment = new AskForCheckoutFragment();
         fragment.attachManual(this);
         fragment.handleProceedButtonClicked();
-        try{
-            Thread.sleep(10);
-        }
-        catch (Exception ex){
-            Assert.assertFalse(true);
-        }
         Assert.assertTrue(this.callbackCalled);
     }
 

@@ -13,12 +13,6 @@ public class ScanErrorInteractionListenerTest implements ScanErrorFragment.ScanE
         ScanErrorFragment fragment = new ScanErrorFragment();
         fragment.attachManual(this);
         fragment.handleRetryButtonClicked();
-        try{
-            Thread.sleep(10);
-        }
-        catch (Exception ex){
-            Assert.assertFalse(true);
-        }
         Assert.assertTrue(this.callbackCalled);
     }
 

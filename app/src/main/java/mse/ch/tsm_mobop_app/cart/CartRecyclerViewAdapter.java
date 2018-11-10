@@ -9,7 +9,6 @@ import android.widget.TextView;
 import mse.ch.tsm_mobop_app.R;
 
 import java.math.BigDecimal;
-import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
