@@ -57,9 +57,12 @@ public class DetailsFragment extends Fragment {
         this.amountLabel = view.findViewById(R.id.detail_amount);
         amountLabel.setText(item.getFormattedQuantity());
 
-        setQuantityInformation();
+        if(item.getQuantityLabel().isEmpty()) {
+            setQuantityInformation();
+            setupControlButtons();
+        }
+
         showQuantityInformation();
-        setupControlButtons();
         setupFAB(view);
 
         return view;
@@ -67,7 +70,7 @@ public class DetailsFragment extends Fragment {
 
     private void setQuantityInformation() {
         this.newQuantity = item.getQuantity().intValueExact();
-        if(item.getQuantityLabel().isEmpty()) updateQuantityLabel();
+        updateQuantityLabel();
     }
 
     private void showQuantityInformation() {
@@ -117,7 +120,8 @@ public class DetailsFragment extends Fragment {
         FloatingActionButton acceptFab = view.findViewById(R.id.detail_accept);
         acceptFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                item.setQuantity(new BigDecimal(newQuantity));
+                if(item.getQuantityLabel().isEmpty())
+                    item.setQuantity(new BigDecimal(newQuantity));
                 handleAcceptButtonClicked();
             }
         });
