@@ -225,9 +225,6 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
         super.onAttach(context);
         if (context instanceof CartListener) {
             cListener = (CartListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
         }
     }
 

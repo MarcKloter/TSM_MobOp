@@ -1,6 +1,5 @@
 package mse.ch.tsm_mobop_app.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
