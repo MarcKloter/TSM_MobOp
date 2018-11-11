@@ -121,7 +121,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
     public void onProceedButtonClick() {
         Intent intent = new Intent(PurchaseActivity.this, CheckoutActivity.class);
         List<CartItem> items = CART_FRAGMENT.getAllItemsInCart();
-        String user = getCurrentUser(getBaseContext());
+        String user = getCurrentUser();
 
         List<OrderArticleDataModel> articlesForOrder = new ArrayList<>();
         for(CartItem current : items){
@@ -138,7 +138,7 @@ public class PurchaseActivity extends AppCompatActivity implements CartListener,
      * This method is just to generate a random user ID without any meaning, to have something
      * to identify the user, as we don't have any real user in this project state.
      */
-    private static String getCurrentUser(Context context) {
+    private static String getCurrentUser() {
         return "RANDOM-USER " + new Random().nextInt(500000);
     }
 }
