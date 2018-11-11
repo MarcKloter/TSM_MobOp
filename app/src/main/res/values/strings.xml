@@ -12,6 +12,7 @@
 
     <!-- Strings for scan-package -->
     <string name="scan_loading_message">Retrieving item information</string>
+    <string name="qr_error_message_title">Error</string>
     <string name="qr_error_message">There was an error retrieving the item information.</string>
     <string name="qr_error_button">Retry</string>
 
@@ -29,7 +30,4 @@
     <string name="checkout_ask_title">Proceed with checkout?</string>
     <string name="checkout_ask_yes">Yes</string>
     <string name="checkout_ask_no">No</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

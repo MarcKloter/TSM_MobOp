@@ -1,39 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".scan.ScanLoadingFragment">
 
-    <TextView
-        android:id="@+id/error_text"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="top|center_horizontal"
-        android:text="@string/qr_error_message"
-        android:layout_marginLeft="40sp"
-        android:layout_marginRight="40sp"
-        android:layout_marginTop="40sp"
-        android:textSize="24sp" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:paddingBottom="48dp"
+        android:visibility="visible">
 
-    <ImageView
-        android:id="@+id/error_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30sp"
-        android:src="@drawable/ic_error_outline_black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8sp"
+            android:drawableTop="@drawable/ic_error_outline_black"
+            android:drawablePadding="16dp"
+            android:text="@string/qr_error_message_title"
+            android:textAlignment="center"
+            android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/error_retry"
-        android:text="@string/qr_error_button"
-        android:layout_width="wrap_content"
-        android:layout_height="48sp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30sp"
-        android:background="@color/colorPrimaryLight"
-        android:textColor="@android:color/white"
-        />
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/qr_error_message"
+            android:paddingHorizontal="@dimen/text_margin"
+            android:textAlignment="center"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/error_retry"
+            android:text="@string/qr_error_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:paddingBottom="@dimen/button_padding_vertical"
+            android:paddingTop="@dimen/button_padding_vertical"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            />
+        </LinearLayout>
+    </RelativeLayout>

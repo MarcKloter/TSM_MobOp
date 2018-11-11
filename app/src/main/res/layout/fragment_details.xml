@@ -116,7 +116,7 @@
 
         <TextView
             android:id="@+id/detail_quantity"
-            android:layout_width="60dp"
+            android:layout_width="56dp"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:layout_marginTop="@dimen/text_margin"
