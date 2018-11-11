@@ -38,10 +38,8 @@ public class CartFragment extends Fragment implements CartRecyclerViewListener {
     private LinearLayout cartEmptyView;
     private LinearLayout cart;
 
-    /**
-     * Mandatory empty constructor for the fragment manager
-     */
     public CartFragment() {
+        // Mandatory empty constructor for the fragment manager
     }
 
     @Override
